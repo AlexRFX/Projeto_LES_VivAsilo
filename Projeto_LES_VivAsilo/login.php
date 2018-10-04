@@ -1,24 +1,45 @@
-<?php session_start();?>
-<?php require_once 'config.php'; ?>	
-<?php require_once DBAPI; ?>
-<?php require_once TRATAMENTOLOGINAPI?>
-<?php $_SESSION["error_message"] = "";?>
 <?php
-$conn = open_database();
+// inclui o arquivo de inicialização:
+require 'init.php';
+// Resgata variáveis do formulário do form-login.php:
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$passwordHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 
-$sqlQuery = "SELECT * FROM tb_usuario WHERE email= '$loginUser' and senha= '$senhaUser'";
-$result = $conn->query($sqlQuery);
-
-if($result->num_rows > 0) {
- $_SESSION['email'] = $loginUser;
-$_SESSION['senha'] = $senhaUser;
-header('location:home.php');
-}else{
-    unset ($_SESSION['email']);
-    unset ($_SESSION['senha']);
-    $_SESSION["error_message"] = "Email ou senha inválidos";
-    header('location:index.php');
+// Caso falte algum parametro:
+if (empty($email) || empty($passwordHash)){
+    echo "Informe email e senha";
+    exit;
 }
 
- 
-?>
+// Cria o hash da senha:
+//$passwordHash = make_hash($passwordHash);
+
+// Chama a função da conexão PDO::
+$pdo = db_connect();
+
+$sql = "SELECT id_usuario, nm_usuario FROM tb_usuario WHERE email = :email AND senha = :senha";
+$stmt = $pdo->prepare($sql);
+
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':senha', $passwordHash);
+
+$stmt->execute();
+
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Messagem de erro:
+if (count($users) <= 0){
+    echo "login ou senha incorretos";
+    exit;
+}
+
+// Pega o usuário atual
+$user = $users[0];
+
+session_start();
+$_SESSION['logged_in'] = true;
+$_SESSION['id_usuario'] = $user['id_usuario'];
+$_SESSION['nm_usuario'] = $user['nm_usuario'];
+
+// Volta para a Home
+header('Location: home.php');
