@@ -1,15 +1,24 @@
-<?php session_start();?>
-<?php require_once 'config.php'; ?>	
-<?php require_once DBAPI; ?>
+<?php
+session_start();
+// inclui o arquivo de inicialização:
+require 'init.php';
+?>
+<!doctype html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title></title>
+        <meta charset="utf-8">
+
+        <title>Home - VivAsilo</title>
     </head>
+
     <body>
-        <?php
-        $db = open_database();
-        ?>
+        <h1>Home - VivAsilo</h1>
+
+        <?php if (loggedin()): ?>
+            <p>Olá, <?php echo $_SESSION['nm_usuario']; ?>. <a href="painel.php">Painel</a> | <a href="loginout.php">Sair</a></p>
+        <?php else: ?>
+            <p>Olá, visitante. <a href="form-login.php">Login</a></p>
+        <?php endif; ?>
+
     </body>
 </html>
-<?php $_SESSION["error_message"] = ""; $_SESSION["error_color"] = ""; ?>

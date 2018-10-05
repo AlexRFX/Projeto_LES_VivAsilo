@@ -10,13 +10,13 @@ require 'logincheck.php';
     <head>
         <meta charset="utf-8">
 
-        <title>Sistema de Login PHP</title>
+        <title>Usuário - VivAsilo</title>
     </head>
 
     <body>
         
-        <h1>Painel do Usuário</h1>
+        <h1>Painel do Usuário - VivAsilo</h1>
 
-        <p>Bem-vindo ao seu painel, <?php echo $_SESSION['nm_user']; ?> | <a href="logout.php">Sair</a></p>
+        <p>Bem-vindo ao seu painel, <?php echo $_SESSION['nm_usuario']; ?> | <a href="loginout.php">Sair</a></p>
     </body>
 </html>

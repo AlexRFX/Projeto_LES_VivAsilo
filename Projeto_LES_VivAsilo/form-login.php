@@ -3,12 +3,12 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Login</title>
+        <title>Login - VivAsilo</title>
     </head>
 
     <body>
         <?php require 'init.php';?>
-        <h1>Login</h1>
+        <h1>Login - VivAsilo</h1>
 
         <form action="login.php" method="post">
             <label for="email">E-mail: </label>

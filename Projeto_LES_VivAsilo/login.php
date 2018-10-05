@@ -42,4 +42,4 @@ $_SESSION['id_usuario'] = $user['id_usuario'];
 $_SESSION['nm_usuario'] = $user['nm_usuario'];
 
 // Volta para a Home
-header('Location: home.php');
+header('Location: index.php');
