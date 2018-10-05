@@ -1,7 +1,8 @@
-﻿<?php
+<?php
 // Função que conecta com o MySQL usando PDO:
 function db_connect(){
     try{
+        //$pdo=new PDO("mysql:host=localhost;dbname=dbvivasilo", "root", "");
         $pdo=new PDO("mysql:host=localhost;dbname=id7042898_dbvivasilo", "id7042898_admin", "vivasilo");
         return $pdo;
     }catch(PDOException $e){
