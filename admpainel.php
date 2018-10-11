@@ -1,8 +1,8 @@
 <?php
 session_start();
-// inclui o arquivo de inicialição:
+// inclui o arquivo de inicialiÃ§Ã£o:
 require_once 'init.php';
-// Verifica se o usuário está¡ logado:
+// Verifica se o usuÃ¡rio estÃ¡Â¡ logado:
 require 'logincheck.php';
 if($_SESSION['id_usuario'] != 0){
     header('Location: form-login.php');
@@ -32,13 +32,13 @@ if($_SESSION['id_usuario'] != 0){
             $senha = (isset($_POST["senha"]) && $_POST["senha"] != null) ? $_POST["senha"] : NULL;
             $senha = make_hash($senha);
         } else if (!isset($id)) {
-            // Se nÃ£o se não foi setado nenhum valor para variável $id
+            // Se nÃƒÂ£o se nÃ£o foi setado nenhum valor para variÃ¡vel $id
             $id = (isset($_GET["id"]) && $_GET["id"] != null) ? $_GET["id"] : "";
             $nome = NULL;
             $email = NULL;
             $senha = NULL;
         }
-        // Ação: cadastrar:
+        // AÃ§Ã£o: cadastrar:
         if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $nome != ""){
             $pdo = db_connect();
             try {
@@ -61,12 +61,12 @@ if($_SESSION['id_usuario'] != 0){
                     } else {
                         echo "Deu erro no cadastro!";
                     }} else {
-                        throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
+                        throw new PDOException("Erro: NÃ£o conseguiu executar a declaraÃ§Ã£o SQL!");
                     }} catch (PDOException $erro) {
                         echo "Erro: " . $erro->getMessage();
                     }}
                     }
-                    // Ação: Alterar:
+                    // AÃ§Ã£o: Alterar:
                     if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "upd" && $id != "") {
                         $pdo = db_connect();
                         try {
@@ -79,12 +79,12 @@ if($_SESSION['id_usuario'] != 0){
                             $email = $rs->email;
                             $senha = $rs->senha;
                         } else {
-                            throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
+                            throw new PDOException("Erro: NÃ£o conseguiu executar a declaraÃ§Ã£o SQL!");
                         }} catch (PDOException $erro) {
                             echo "Erro: ".$erro->getMessage();
                         }
                     }
-                    // Ação: Deletar:
+                    // AÃ§Ã£o: Deletar:
                     if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
                         $pdo = db_connect();
                         try {
@@ -94,7 +94,7 @@ if($_SESSION['id_usuario'] != 0){
                                 echo "Usuario deletado com sucesso!";
                                 $id = null;
                             } else {
-                                throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
+                                throw new PDOException("Erro: NÃ£o conseguiu executar a declaraÃ§Ã£o SQL!");
                             }} catch (PDOException $erro) {
                                 echo "Erro: ".$erro->getMessage();
                             }
@@ -129,7 +129,7 @@ if($_SESSION['id_usuario'] != 0){
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th>Senha</th>
-                            <th>Ação</th>
+                            <th>AÃ§Ã£o</th>
                         </tr>
                         <?php try {
                             // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
@@ -145,7 +145,7 @@ if($_SESSION['id_usuario'] != 0){
                                     ."<a href=\"?act=del&id=" . $rs->id_usuario. "\">[Deletar]</a></center></td>";
                                     echo "</tr>";
                                 }} else {
-                                    echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
+                                    echo "Erro: NÃ£o conseguiu recupaerar os dados do Banco de Dados!";
                                 }} catch (PDOException $erro) {
                                     echo "Erro: ".$erro->getMessage();
                                 }?>

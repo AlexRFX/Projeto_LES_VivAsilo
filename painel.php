@@ -1,14 +1,14 @@
 <?php
 session_start();
-// inclui o arquivo de inicialização:
+// inclui o arquivo de inicializaÃ§Ã£o:
 require_once 'init.php';
-// Verifica se o usuário está logado:
+// Verifica se o usuÃ¡rio estÃ¡ logado:
 require 'logincheck.php';
 ?>
 <!doctype html>
 <html>
     <head>
-        <title>Usuário - VivAsilo</title>
+        <title>UsuÃ¡rio - VivAsilo</title>
     </head>
     
     <style><?php include 'css/login.css'; ?></style>
@@ -17,11 +17,11 @@ require 'logincheck.php';
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <h1>Painel do Usuário - VivAsilo</h1>
+        <h1>Painel do UsuÃ¡rio - VivAsilo</h1>
 
         <p>Bem-vindo ao seu painel, <?php echo $_SESSION['nm_usuario']; ?> | <a href="loginout.php">Sair</a>
         <br/><?php if($_SESSION['id_usuario'] != 0){?>
-                    Você pode <a onclick="document.getElementById('id02').style.display='block'"> Troque o seu E-mail</a>
+                    VocÃª pode <a onclick="document.getElementById('id02').style.display='block'"> Troque o seu E-mail</a>
                     ou <a onclick="document.getElementById('id03').style.display='block'"> Troque a sua Senha</a>
                     <?php } ?>
                     </p>

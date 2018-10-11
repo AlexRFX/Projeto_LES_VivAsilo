@@ -1,7 +1,7 @@
 <?php
-// inclui o arquivo de inicialização:
+// inclui o arquivo de inicializaÃ§Ã£o:
 require 'init.php';
-// Resgata variáveis do formulário do form-login.php:
+// Resgata variÃ¡veis do formulÃ¡rio do form-login.php:
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 $senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 
@@ -15,7 +15,7 @@ if (empty($email) || empty($senhaHash)){
 // Cria o hash da senha:
 $senhaHash = make_hash($senhaHash);
 
-// Chama a função da conexão PDO::
+// Chama a funÃ§Ã£o da conexÃ£o PDO::
 $pdo = db_connect();
 
 $sql = "SELECT id_usuario, nm_usuario FROM tb_usuario WHERE email = :email AND senha = :senha";
@@ -34,7 +34,7 @@ if (count($users) <= 0){
     exit;
 }
 
-// Pega o usuário atual
+// Pega o usuÃ¡rio atual
 $user = $users[0];
 
 session_start();

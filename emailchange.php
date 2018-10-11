@@ -1,8 +1,8 @@
 <?php
 session_start();
-// inclui o arquivo de inicialição:
+// inclui o arquivo de inicializaÃ§Ã£o:
 require 'init.php';
-// Resgata variáveis do formulário do painel.php:
+// Resgata variÃ¡veis do formulÃ¡rio do painel.php:
 $email = isset($_POST['email']) ? $_POST['email'] : '';
 
 // Caso falte algum parametro:
@@ -12,7 +12,7 @@ if ((empty($email))){
     exit;
 }
 
-// Chama a função da conexão PDO::
+// Chama a funÃ§Ã£o da conexÃ£o PDO::
 try {
     $pdo = db_connect();
     $stmt = $pdo->prepare('UPDATE tb_usuario SET email = :email WHERE id_usuario = :id') OR die("Error:".mysql_error());
@@ -20,7 +20,7 @@ try {
 
     //echo $stmt->rowCount(); 
 }catch(PDOException $e){
-    echo 'Algo nãoo está, correto, por favor, entre novamente'; $e->getMessage();
+    echo 'Algo nÃ£o estÃ¡, correto, por favor, entre novamente'; $e->getMessage();
     //header("Refresh:5; painel.php");
     exit;
 }

@@ -1,8 +1,8 @@
 <?php
 session_start();
-// inclui o arquivo de inicialição:
+// inclui o arquivo de inicializaÃ§Ã£o:
 require 'init.php';
-// Resgata variáveis do formulário do painel.php:
+// Resgata variÃ¡veis do formulÃ¡rio do painel.php:
 $senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 $novasenhaHash = isset($_POST['novasenha']) ? $_POST['novasenha'] : '';
 $confsenhaHash = isset($_POST['confsenha']) ? $_POST['confsenha'] : '';
@@ -18,14 +18,14 @@ if ((empty($senhaHash) || empty($novasenhaHash) || empty($confsenhaHash))){
 $senhaHash = make_hash($senhaHash); 
 $novasenhaHash = make_hash($novasenhaHash); $confsenhaHash = make_hash($confsenhaHash);
 
-// Caso a nova senha não seja igual a confirmação:
+// Caso a nova senha nÃ£o seja igual a confirmaÃ§Ã£o:
 if ($novasenhaHash != $confsenhaHash){
-    echo "As senhas não coincidem";
+    echo "As senhas nï¿½o coincidem";
     //header("Refresh:5; painel.php");
     exit;
 }
 
-// Chama a função da conexão PDO::
+// Chama a funÃ§Ã£o da conexÃ£o PDO::
 try {
     $pdo = db_connect();
     $stmt = $pdo->prepare('UPDATE tb_usuario SET senha = :novasenha WHERE id_usuario = :id AND senha = :senha') OR die("Error:".mysql_error());
@@ -33,7 +33,7 @@ try {
 
     //echo $stmt->rowCount(); 
 }catch(PDOException $e){
-    echo 'Sua senha antiga não está correta. Por favor, tente outra'; $e->getMessage();
+    echo 'Sua senha antiga nï¿½o estï¿½ correta. Por favor, tente outra'; $e->getMessage();
     //header("Refresh:5; painel.php");
     exit;
 }

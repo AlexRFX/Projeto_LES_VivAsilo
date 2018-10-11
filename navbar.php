@@ -1,5 +1,5 @@
 <?php
-// inclui o arquivo de inicialização:
+// inclui o arquivo de inicializaÃ§Ã£o:
 require 'init.php';
 ?>
 <head>

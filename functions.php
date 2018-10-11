@@ -1,5 +1,5 @@
 <?php
-// Função que conecta com o MySQL usando PDO:
+// FunÃ§Ã£o que conecta com o MySQL usando PDO:
 function db_connect(){
     try{
         //$pdo=new PDO("mysql:host=localhost;dbname=dbvivasilo", "root", "");
@@ -16,7 +16,7 @@ function make_hash($str){
     return md5($str);
 }
 
-// Verifica se o usuario está, logado:
+// Verifica se o usuario estÃ¡, logado:
 function loggedin(){
     if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true){
         return false;

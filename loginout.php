@@ -1,13 +1,13 @@
 <?php
-
-// inicia a sessão
+// Inicia a sessÃ£o:
 session_start();
 
-// muda o valor de logged_in para false
+// Muda o valor de logged_in para false:
 $_SESSION['logged_in'] = false;
 
-// finaliza a sessão
+// Finaliza a sessÃ£o:
 session_destroy();
+//unset($_SESSION['login']);
 
-// retorna para a index.php
+// Retorna para a index.php:
 header('Location: index.php');
