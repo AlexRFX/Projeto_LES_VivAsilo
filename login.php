@@ -1,27 +1,28 @@
 <?php
-// inclui o arquivo de inicializaÃ§Ã£o:
+// inclui o arquivo de inicialização:
 require 'init.php';
-// Resgata variÃ¡veis do formulÃ¡rio do form-login.php:
+// Resgata variáveis do formulário do form-login.php:
 $email = isset($_POST['email']) ? $_POST['email'] : '';
-$passwordHash = isset($_POST['senha']) ? $_POST['senha'] : '';
+$senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 
 // Caso falte algum parametro:
-if (empty($email) || empty($passwordHash)){
+if (empty($email) || empty($senhaHash)){
     echo "Informe email e senha";
+    //header('Refresh:5; form-login.php');
     exit;
 }
 
 // Cria o hash da senha:
-//$passwordHash = make_hash($passwordHash);
+$senhaHash = make_hash($senhaHash);
 
-// Chama a funÃ§Ã£o da conexÃ£o PDO::
+// Chama a função da conexão PDO::
 $pdo = db_connect();
 
 $sql = "SELECT id_usuario, nm_usuario FROM tb_usuario WHERE email = :email AND senha = :senha";
 $stmt = $pdo->prepare($sql);
 
 $stmt->bindParam(':email', $email);
-$stmt->bindParam(':senha', $passwordHash);
+$stmt->bindParam(':senha', $senhaHash);
 
 $stmt->execute();
 
@@ -33,7 +34,7 @@ if (count($users) <= 0){
     exit;
 }
 
-// Pega o usuÃ¡rio atual
+// Pega o usuário atual
 $user = $users[0];
 
 session_start();

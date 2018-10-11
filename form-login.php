@@ -7,7 +7,9 @@
     </head>
 
     <body>
-        <?php require 'init.php';?>
+        <?php 
+        // Include da NavBar
+        include 'navbar.php';?>
         <h1>Login - VivAsilo</h1>
 
         <form action="login.php" method="post">
@@ -17,7 +19,7 @@
 
             <br><br>
 
-            <label for="password">Senha: </label>
+            <label for="senha">Senha: </label>
             <br>
             <input type="password" name="senha" id="senha">
 

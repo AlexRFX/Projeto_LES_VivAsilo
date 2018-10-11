@@ -1,21 +1,22 @@
 <?php
-// Fun√ß√£o que conecta com o MySQL usando PDO:
+// FunÁ„o que conecta com o MySQL usando PDO:
 function db_connect(){
     try{
         //$pdo=new PDO("mysql:host=localhost;dbname=dbvivasilo", "root", "");
         $pdo=new PDO("mysql:host=localhost;dbname=id7042898_dbvivasilo", "id7042898_admin", "vivasilo");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
     }catch(PDOException $e){
-        echo $e->getMessage();
+        echo "Connection error:". $e->getMessage();
     }
 } 
 
-/*Cria o hash da senha, usando MD5 e SHA-1:
+//Cria o hash da senha, usando MD5:
 function make_hash($str){
-    return sha1(md5($str));
-} */
+    return md5($str);
+}
 
-// Verifica se o usu√°rio est√° logado:
+// Verifica se o usuario est·, logado:
 function loggedin(){
     if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true){
         return false;
