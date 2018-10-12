@@ -4,7 +4,7 @@ session_start();
 require_once 'init.php';
 // Verifica se o usuário está¡ logado:
 require 'logincheck.php';
-if($_SESSION['id_usuario'] != 0){
+if($_SESSION['administrador'] != 1){
     header('Location: form-login.php');
 } ?>
 <html>
@@ -23,7 +23,7 @@ if($_SESSION['id_usuario'] != 0){
         include 'navbar.php';?>
         <h1>Painel de Controle do ADM</h1>
         <p><a href="loginout.php"> Logout</a></p><br/>
-        <?php if($_SESSION['id_usuario'] == 0){ 
+        <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = (isset($_POST["id"]) && $_POST["id"] != null) ? $_POST["id"] : "";
@@ -111,7 +111,7 @@ if($_SESSION['id_usuario'] != 0){
                         if (isset($nome) && $nome != null || $nome != ""){
                             echo "value=\"{$nome}\"";
                         }?> />
-                        E-mail: <input type="text" name="email" <?php
+                        E-mail: <input type="email" name="email" <?php
                         // Preenche o email no campo email com um valor "value"
                         if (isset($email) && $email != null || $email != ""){
                             echo "value=\"{$email}\"";

@@ -20,7 +20,7 @@ require 'logincheck.php';
         <h1>Painel do Usuário - VivAsilo</h1>
 
         <p>Bem-vindo ao seu painel, <?php echo $_SESSION['nm_usuario']; ?> | <a href="loginout.php">Sair</a>
-        <br/><?php if($_SESSION['id_usuario'] != 0){?>
+        <br/><?php if($_SESSION['administrador'] != 1){?>
                     Você pode <a onclick="document.getElementById('id02').style.display='block'"> Troque o seu E-mail</a>
                     ou <a onclick="document.getElementById('id03').style.display='block'"> Troque a sua Senha</a>
                     <?php } ?>
@@ -32,7 +32,7 @@ require 'logincheck.php';
                     </div>
                     <div class="container">
                         <label for="email"><b>Email:</b></label>
-                        <input type="text" placeholder="Digite o seu novo e-mail" name="email" id="email" required>
+                        <input type="email" placeholder="Digite o seu novo e-mail" name="email" id="email" required>
 
                         <button type="submit">Trocar E-mail</button>
                         <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancelar</button>

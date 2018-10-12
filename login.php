@@ -18,7 +18,7 @@ $senhaHash = make_hash($senhaHash);
 // Chama a função da conexão PDO::
 $pdo = db_connect();
 
-$sql = "SELECT id_usuario, nm_usuario FROM tb_usuario WHERE email = :email AND senha = :senha";
+$sql = "SELECT id_usuario, nm_usuario, administrador FROM tb_usuario WHERE email = :email AND senha = :senha";
 $stmt = $pdo->prepare($sql);
 
 $stmt->bindParam(':email', $email);
@@ -41,6 +41,7 @@ session_start();
 $_SESSION['logged_in'] = true;
 $_SESSION['id_usuario'] = $user['id_usuario'];
 $_SESSION['nm_usuario'] = $user['nm_usuario'];
+$_SESSION['administrador'] = $user['administrador'];
 
 // Volta para a Home
 header('Location: index.php');
