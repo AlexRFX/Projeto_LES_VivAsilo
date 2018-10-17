@@ -23,3 +23,14 @@ function loggedin(){
     }
     return true;
 }
+
+// Verifica se o usuario é mantenedor:
+function maintainerch($id){
+    $pdo = db_connect();
+    $stmt = $pdo->prepare("SELECT fk_id FROM tb_mantenedor WHERE fk_id = :id");
+    $stmt->bindParam(':id', $id); $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        return true;
+    }
+    return false;
+}

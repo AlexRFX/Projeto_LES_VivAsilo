@@ -18,13 +18,19 @@ require 'logincheck.php';
         // Include da NavBar
         include 'navbar.php';?>
         <h1>Painel do Usuário - VivAsilo</h1>
-
+        
         <p>Bem-vindo ao seu painel, <?php echo $_SESSION['nm_usuario']; ?> | <a href="loginout.php">Sair</a>
         <br/><?php if($_SESSION['administrador'] != 1){?>
-                    Você pode <a onclick="document.getElementById('id02').style.display='block'"> Troque o seu E-mail</a>
-                    ou <a onclick="document.getElementById('id03').style.display='block'"> Troque a sua Senha</a>
-                    <?php } ?>
-                    </p>
+                        Você pode <a onclick="document.getElementById('id02').style.display='block'"> Troque o seu E-mail</a>
+                        ou <a onclick="document.getElementById('id03').style.display='block'"> Troque a sua Senha</a></br>
+                        <?php if(maintainerch($_SESSION['id_usuario']) != true){?>
+                            <p> Aguardando validação da conta.</p>
+                        <?php } else { ?>
+                            Agora você pode <a onclick="document.getElementById('id04').style.display='block'"> Troque o seu número de Telefone</a>
+                            ou <a onclick="document.getElementById('id05').style.display='block'"> Troque a sua Foto</a>
+                        <?php }
+                    } ?>
+        </p>
             <div id="id02" class="modal"> 
                 <form action="emailchange.php" method="post" class="modal-content animate">
                     <div class="imgcontainer">

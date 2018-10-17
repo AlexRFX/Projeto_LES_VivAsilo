@@ -22,7 +22,7 @@ if($_SESSION['administrador'] != 1){
         // Include da NavBar
         include 'navbar.php';?>
         <h1>Painel de Controle do ADM</h1>
-        <p><a href="loginout.php"> Logout</a></p><br/>
+        <p><a href="solicitations.php">Solicitações (Var(x))</a> | <a href="loginout.php"> Logout</a></p><br/>
         <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -32,7 +32,7 @@ if($_SESSION['administrador'] != 1){
             $senha = (isset($_POST["senha"]) && $_POST["senha"] != null) ? $_POST["senha"] : NULL;
             $senha = make_hash($senha);
         } else if (!isset($id)) {
-            // Se nÃ£o se não foi setado nenhum valor para variável $id
+            // Se não se não foi setado nenhum valor para variável $id
             $id = (isset($_GET["id"]) && $_GET["id"] != null) ? $_GET["id"] : "";
             $nome = NULL;
             $email = NULL;
@@ -107,48 +107,50 @@ if($_SESSION['administrador'] != 1){
                             echo "value=\"{$id}\"";
                         }?> />
                         Nome: <input type="text" name="nome" <?php
-                        // Preenche o nome no campo name com um valor "value"
+                        // Preenche o nome no campo nome com um valor "value"
                         if (isset($nome) && $nome != null || $nome != ""){
                             echo "value=\"{$nome}\"";
                         }?> />
-                        E-mail: <input type="email" name="email" <?php
+                        E-mail: <input type="text" name="email" <?php
                         // Preenche o email no campo email com um valor "value"
                         if (isset($email) && $email != null || $email != ""){
                             echo "value=\"{$email}\"";
                         }?> />
                         Senha: <input type="password" name="senha" <?php
-                        // Preenche o celular no campo password com um valor "value"
+                        // Preenche a senha no campo password com um valor "value"
                         if (isset($senha) && $senha != null || $senha != ""){
                             echo "value=\"{$senha}\"";
                         }?> />
                         <input type="submit" value="Salvar"/>
                         <input type="reset" value="Resetar"/>
                     </form>
+                    <h2>Lista de Mantenedores:</h2>
                     <table border="1" width="100%">
                         <tr>
                             <th>Nome</th>
                             <th>E-mail</th>
-                            <th>Senha</th>
+                            <th>Telefone</th>
+                            <th>Foto</th>
                             <th>Ação</th>
                         </tr>
                         <?php try {
                             // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                             $pdo = db_connect();
-                            $stmt = $pdo->prepare("SELECT * FROM tb_usuario WHERE id_usuario > 0");
+                            $stmt = $pdo->prepare("SELECT a.id_usuario, a.nm_usuario, a.email, b.tel_mantenedor, b.foto_mantenedor FROM tb_usuario a, tb_mantenedor b WHERE a.id_usuario = b.fk_id");
  
                             if ($stmt->execute()) {
                                 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
                                     echo "<tr>";
-                                    echo "<td>".$rs->nm_usuario."</td><td>".$rs->email."</td><td>".$rs->senha
+                                    echo "<td>".$rs->nm_usuario."</td><td>".$rs->email."</td><td>".$rs->tel_mantenedor."</td><td>".$rs->foto_mantenedor
                                     ."</td><td><center><a href=\"?act=upd&id=" . $rs->id_usuario. "\">[Alterar]</a>"
                                     ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                                     ."<a href=\"?act=del&id=" . $rs->id_usuario. "\">[Deletar]</a></center></td>";
                                     echo "</tr>";
-                                }} else {
-                                    echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
-                                }} catch (PDOException $erro) {
-                                    echo "Erro: ".$erro->getMessage();
-                                }?>
+                                    }} else {
+                                        echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
+                                    }} catch (PDOException $erro) {
+                                        echo "Erro: ".$erro->getMessage();
+                                    }?>
                     </table>
     </body>
 </html>

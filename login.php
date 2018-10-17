@@ -8,8 +8,9 @@ $senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 // Caso falte algum parametro:
 if (empty($email) || empty($senhaHash)){
     echo "Informe email e senha";
-    //header('Refresh:5; form-login.php');
-    exit;
+    //header('Refresh:5; form-login.php');?>
+    </br></br><a href="index.php">Voltar para a pagina principal</a>
+    <?php exit;
 }
 
 // Cria o hash da senha:
@@ -30,8 +31,9 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Messagem de erro:
 if (count($users) <= 0){
-    echo "login ou senha incorretos";
-    exit;
+    echo "login ou senha incorretos";?>
+    </br></br><a href="index.php">Voltar para a pagina principal</a>
+    <?php exit;
 }
 
 // Pega o usuário atual
@@ -44,4 +46,5 @@ $_SESSION['nm_usuario'] = $user['nm_usuario'];
 $_SESSION['administrador'] = $user['administrador'];
 
 // Volta para a Home
-header('Location: index.php');
+header('Location: index.php');?>
+</br></br><a href="index.php">Voltar para a pagina principal</a>

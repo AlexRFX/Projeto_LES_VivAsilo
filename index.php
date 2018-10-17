@@ -24,7 +24,7 @@ require 'init.php';
                     <p>Olá, <?php echo $_SESSION['nm_usuario']; ?> | <a href="admpainel.php">Painel</a> | <a href="loginout.php">Sair</a></p>
                 <?php endif; ?>    
             <?php else: ?>
-                <p>Olá, visitante | <a href="form-login.php">Login</a> | <a href="form-register.php">Cadastre-se</a></p>
+                <p>Olá, visitante | <a href="form-register.php">Cadastrear-se</a> | <a href="form-login.php">Efetuar Login</a></p>
             <?php endif; ?>
 
     </body>

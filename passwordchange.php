@@ -10,8 +10,9 @@ $confsenhaHash = isset($_POST['confsenha']) ? $_POST['confsenha'] : '';
 // Caso falte algum parametro:
 if ((empty($senhaHash) || empty($novasenhaHash) || empty($confsenhaHash))){
     echo "Digite sua senha antiga e sua nova senha";
-    //header('Refresh:5; painel.php');
-    exit;
+    //header('Refresh:5; painel.php');?>
+    </br></br><a href="painel.php">Voltar para o painel</a>
+    <?php exit;
 }
 
 // Cria o hash das senhas:
@@ -20,9 +21,10 @@ $novasenhaHash = make_hash($novasenhaHash); $confsenhaHash = make_hash($confsenh
 
 // Caso a nova senha não seja igual a confirmação:
 if ($novasenhaHash != $confsenhaHash){
-    echo "As senhas n�o coincidem";
-    //header("Refresh:5; painel.php");
-    exit;
+    echo "As senhas não coincidem";
+    //header("Refresh:5; painel.php");?>
+    </br></br><a href="painel.php">Voltar para o painel</a>
+    <?php exit;
 }
 
 // Chama a função da conexão PDO::
@@ -33,10 +35,12 @@ try {
 
     //echo $stmt->rowCount(); 
 }catch(PDOException $e){
-    echo 'Sua senha antiga n�o est� correta. Por favor, tente outra'; $e->getMessage();
-    //header("Refresh:5; painel.php");
-    exit;
+    echo 'Sua senha antiga não está correta. Por favor, tente outra'; $e->getMessage();
+    //header("Refresh:5; painel.php");?>
+    </br></br><a href="painel.php">Voltar para o painel</a>
+    <?php exit;
 }
 
 // Volta para a Home
-header('Location: painel.php');
+header('Location: painel.php');?>
+</br></br><a href="painel.php">Voltar para o painel</a>

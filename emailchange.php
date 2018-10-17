@@ -8,8 +8,9 @@ $email = isset($_POST['email']) ? $_POST['email'] : '';
 // Caso falte algum parametro:
 if ((empty($email))){
     echo "Digite o seu novo e-mail";
-    //header("Refresh:5; painel.php");
-    exit;
+    //header("Refresh:5; painel.php");?>
+    </br></br><a href="painel.php">Voltar para o painel</a>
+    <?php exit;
 }
 
 // Chama a função da conexão PDO::
@@ -21,9 +22,11 @@ try {
     //echo $stmt->rowCount(); 
 }catch(PDOException $e){
     echo 'Algo não está, correto, por favor, entre novamente'; $e->getMessage();
-    //header("Refresh:5; painel.php");
-    exit;
+    //header("Refresh:5; painel.php");?>
+    </br></br><a href="painel.php">Voltar para o painel</a>
+    <?php exit;
 }
 
 // Volta para a Home
-header('Location: painel.php');
+header('Location: painel.php');?>
+</br></br><a href="painel.php">Voltar para o painel</a>
