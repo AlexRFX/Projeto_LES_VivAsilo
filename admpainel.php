@@ -22,7 +22,7 @@ if($_SESSION['administrador'] != 1){
         // Include da NavBar
         include 'navbar.php';?>
         <h1>Painel de Controle do ADM</h1>
-        <p><a href="solicitations.php">Solicitações (Var(x))</a> | <a href="loginout.php"> Logout</a></p><br/>
+        <p><a href="solicitations.php">Solicitações (NX)</a> | <a href="loginout.php"> Logout</a></p><br/>
         <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -88,8 +88,10 @@ if($_SESSION['administrador'] != 1){
                     if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
                         $pdo = db_connect();
                         try {
-                            $stmt = $pdo->prepare("DELETE FROM tb_usuario WHERE id_usuario = ?");
+                            $stmt = $pdo->prepare("DELETE FROM tb_mantenedor WHERE fk_id = ?");
                             $stmt->bindParam(1, $id, PDO::PARAM_INT);
+                            //$stmt = $pdo->prepare("DELETE FROM tb_usuario WHERE id_usuario = ?");
+                            //$stmt->bindParam(1, $id, PDO::PARAM_INT);
                             if ($stmt->execute()) {
                                 echo "Usuario deletado com sucesso!";
                                 $id = null;

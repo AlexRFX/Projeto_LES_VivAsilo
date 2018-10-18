@@ -27,21 +27,29 @@ if($_SESSION['administrador'] != 1){
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = (isset($_POST["id"]) && $_POST["id"] != null) ? $_POST["id"] : "";
-            $nome = (isset($_POST["nome"]) && $_POST["nome"] != null) ? $_POST["nome"] : "";
-            $email = (isset($_POST["email"]) && $_POST["email"] != null) ? $_POST["email"] : "";
-            $senha = (isset($_POST["senha"]) && $_POST["senha"] != null) ? $_POST["senha"] : NULL;
-            $senha = make_hash($senha);
-            $telefone = (isset($_POST["telefone"]) && $_POST["telefone"] != null) ? $_POST["telefone"] : "";
         } else if (!isset($id)) {
             // Se não se não foi setado nenhum valor para variável $id
             $id = (isset($_GET["id"]) && $_GET["id"] != null) ? $_GET["id"] : "";
-            $nome = NULL;
-            $email = NULL;
-            $senha = NULL;
-            $telefone = NULL;
         }
+        // Ação: Aceitar:
+        if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "acc" && $id != ""){
+            $pdo = db_connect();
+            try {
+                $stmt = $pdo->prepare("INSERT INTO tb_mantenedor (`fk_id`, `tel_mantenedor`, `foto_mantenedor`) VALUES (?, null, null)");
+                $stmt->bindParam(1, $id, PDO::PARAM_INT);
+                if ($stmt->execute()) {
+                    if ($stmt->rowCount() > 0) {
+                        echo "Usuario ativado com sucesso!";
+                        $id = null;
+                    } else {
+                        echo "Ocorrou algum erro!";
+                    }} else {
+                        throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
+                    }} catch (PDOException $erro) {
+                        echo "Erro: " . $erro->getMessage();
+                    }}
         // Ação: Deletar/Cancelar:
-        if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != "") {
+        if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "del" && $id != ""){
             $pdo = db_connect();
             try {
                 $stmt = $pdo->prepare("DELETE FROM tb_usuario WHERE id_usuario = ?");
@@ -67,13 +75,13 @@ if($_SESSION['administrador'] != 1){
             <?php try {
                 // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                 $pdo = db_connect();
-                $stmt = $pdo->prepare("SELECT * FROM tb_usuario a, tb_mantenedor b WHERE a.administrador = 0 AND a.id_usuario != b.fk_id");
+                $stmt = $pdo->prepare("SELECT * FROM tb_usuario a LEFT JOIN tb_mantenedor b ON a.id_usuario = b.fk_id WHERE b.fk_id IS NULL AND a.administrador = 0");
  
                 if ($stmt->execute()) {
                     while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
                         echo "<tr>";
                         echo "<td>".$rs->nm_usuario."</td><td>".$rs->email
-                        ."</td><td><center><a href=\"?act=upd&id=" . $rs->id_usuario. "\">[Ativar]</a>"
+                        ."</td><td><center><a href=\"?act=acc&id=" . $rs->id_usuario. "\">[Ativar]</a>"
                         ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                         ."<a href=\"?act=del&id=" . $rs->id_usuario. "\">[Cancelar]</a></center></td>";
                         echo "</tr>";
