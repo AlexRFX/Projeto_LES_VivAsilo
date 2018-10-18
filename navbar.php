@@ -8,7 +8,32 @@ require 'init.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
-    <?php include 'css/login.css'; ?></style>
+    <?php include 'css/login.css'; ?>
+</style>
+<style type="text/css">
+    header{
+        font-size:25pt;
+        background-color:#E4F4C2;
+        text-align: center;
+    }
+    body{
+        background-color:#C8E38E;
+    }
+    th{
+	font-size:14pt;
+        width:50px;
+    }
+    td{
+        width:150px;
+    }
+    input{
+        height:50px;
+    }
+    
+    div{
+    text-align:center;
+    font-size:15pt;
+    }
 </style>
 </head>
 <body>

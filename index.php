@@ -15,18 +15,19 @@ require 'init.php';
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <h1>Home - VivAsilo</h1>
+        <header><b>VivAsilo</b></h1></center></header>
 
         <?php if (loggedin()):
                 if($_SESSION['administrador'] != 1):?>
-                    <p>Olá, <?php echo $_SESSION['nm_usuario']; ?> | <a href="painel.php">Painel</a> | <a href="loginout.php">Sair</a></p>
+                     <div align="center"><p>Olá, <?php echo $_SESSION['nm_usuario']; ?> | <a href="painel.php">Painel</a> | <a href="loginout.php">Sair</a></p></div>
                 <?php else: ?>
-                    <p>Olá, <?php echo $_SESSION['nm_usuario']; ?> | <a href="admpainel.php">Painel</a> | <a href="loginout.php">Sair</a></p>
+                     <div align="center"><p>Olá, <?php echo $_SESSION['nm_usuario']; ?> | <a href="admpainel.php">Painel</a> | <a href="loginout.php">Sair</a></p></div>
                 <?php endif; ?>    
             <?php else: ?>
-                <p>Olá, visitante | <a href="form-register.php">Cadastrear-se</a> | <a href="form-login.php">Efetuar Login</a></p>
+                    <div align="center"><p>Olá, visitante | <a href="form-register.php">Cadastrear-se</a> | <a href="form-login.php">Efetuar Login</a></p></div>
             <?php endif; ?>
 
     </body>
 </html>
+
 

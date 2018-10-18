@@ -4,6 +4,7 @@ session_start();
 require_once 'init.php';
 // Verifica se o usuário está logado:
 require 'logincheck.php';
+
 ?>
 <!doctype html>
 <html>
@@ -17,7 +18,7 @@ require 'logincheck.php';
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <h1>Painel do Usuário - VivAsilo</h1>
+        <header>Painel do Usuário - VivAsilo</header>>
         
         <p>Bem-vindo ao seu painel, <?php echo $_SESSION['nm_usuario']; ?> | <a href="loginout.php">Sair</a>
         <br/><?php if($_SESSION['administrador'] != 1){?>

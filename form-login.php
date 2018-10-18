@@ -3,29 +3,28 @@
     <head>
         <meta charset="utf-8">
 
-        <title>Login - VivAsilo</title>
+  <title>Login - VivAsilo</title>
     </head>
 
     <body>
+        
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <h1>Login - VivAsilo</h1>
-
+        
+        <header><b>Login - VivAsilo</b></header>
+    </br>
+    </br>
+   <center><table>
         <form action="login.php" method="post">
-            <label for="email">E-mail: </label>
-            <br>
-            <input type="text" name="email" id="email">
-
-            <br><br>
-
-            <label for="senha">Senha: </label>
-            <br>
-            <input type="password" name="senha" id="senha">
-
-            <br><br>
-
-            <input type="submit" value="Entrar">
-        </form>
+            <tr><th colspan='2'><label for="email">E-mail: </label></th></tr>
+            <tr><td colspan='2'><input type="text" name="email" id="email" style="width:450px"></td></tr>
+            <tr><td colspan='2'></br></td></tr>
+            <tr><th colspan='2'<label for="senha">Senha: </label></th></tr>
+            <tr><td colspan='2'><input type="password" name="senha" id="senha" style="width:450px"></td></tr>
+            <tr><td colspan='2'></br></td></tr>
+            <tr><th><center><input type="submit" value="Entrar" style="width:150px"></center></th>
+            <th><center><input type="submit" value="Cadastrar-se" action="" style="width:150px"></center></th></tr>
+        </form></table></center>
     </body>
 </html>
