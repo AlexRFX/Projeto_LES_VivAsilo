@@ -21,8 +21,8 @@ if($_SESSION['administrador'] != 1){
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <h1>Painel de Controle do ADM</h1>
-        <p><a href="solicitations.php">Solicitações (NX)</a> | <a href="loginout.php"> Logout</a></p><br/>
+        <header>Painel de Controle do ADM</header>>
+        <div><a href="solicitations.php">Solicitações (NX)</a> | <a href="index.php">Home</a> | <a href="loginout.php"> Logout</a></div><br/>
         <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -102,29 +102,30 @@ if($_SESSION['administrador'] != 1){
                             }
                     }?>
                     <form action="?act=save" method="POST" name="form1" >
-                        <h2>User Registration</h2>
+                        <center><h2>Registrar Usuário:</h2>
                         <input type="hidden" name="id" <?php
                         // Preenche o id no campo id com um valor "value"
                         if (isset($id) && $id != null || $id != "") {
                             echo "value=\"{$id}\"";
                         }?> />
-                        Nome: <input type="text" name="nome" <?php
+                        <tr>
+                            <td>Nome:</td> <td><input type="text" name="nome" style="width:200;" <?php
                         // Preenche o nome no campo nome com um valor "value"
                         if (isset($nome) && $nome != null || $nome != ""){
                             echo "value=\"{$nome}\"";
-                        }?> />
-                        E-mail: <input type="text" name="email" <?php
+                            }?> /></td>
+                        <td>E-mail:</td> <td><input type="text" name="email" style="width:200;"<?php
                         // Preenche o email no campo email com um valor "value"
                         if (isset($email) && $email != null || $email != ""){
                             echo "value=\"{$email}\"";
-                        }?> />
-                        Senha: <input type="password" name="senha" <?php
+                        }?> /></td>
+                        <td>Senha:</td><td> <input type="password" name="senha" style="width:200;" <?php
                         // Preenche a senha no campo password com um valor "value"
                         if (isset($senha) && $senha != null || $senha != ""){
                             echo "value=\"{$senha}\"";
-                        }?> />
-                        <input type="submit" value="Salvar"/>
-                        <input type="reset" value="Resetar"/>
+                        }?> /></td>
+                        <td><input type="submit" value="Salvar"/></td>
+                        <td><input type="reset" value="Resetar"/></center></td>
                     </form>
                     <h2>Lista de Mantenedores:</h2>
                     <table border="1" width="100%">
