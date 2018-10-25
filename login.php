@@ -6,9 +6,12 @@ $email = isset($_POST['email']) ? $_POST['email'] : '';
 $senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 // Caso falte algum parametro:
 if (empty($email) || empty($senhaHash)){
-    echo "Informe email e senha";
+        // Include da NavBar
+        include 'navbar.php';
+    ?> <center><h2>Informe email e senha</h2>
+    <?php
     //header('Refresh:5; form-login.php');?>
-    </br></br><a href="index.php">Voltar para a pagina principal</a>
+            </br><a href="form-login.php"><h3> Voltar para a pagina de login </h3></a></center>
         <?php exit;
 }
 
@@ -30,8 +33,9 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Messagem de erro:
 if (count($users) <= 0){
-    echo "login ou senha incorretos";?>
-    <a href="index.php">Voltar para a pagina principal</a>
+    include 'navbar.php';
+    ?> <center><h2>Login ou senha incorretos</h2>
+        <a href="form-login.php"><h3>Voltar para a pagina de login</h3></a>
     <?php exit;
 }
 

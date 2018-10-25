@@ -13,6 +13,7 @@
         include 'navbar.php';?>
         
         <header><b>Login - VivAsilo</b></header>
+    <center><a href="index.php"><h3>Voltar para a pagina principal</h3></a></center>
     </br>
     </br>
    <center><table>
@@ -23,7 +24,7 @@
             <tr><th colspan='2'<label for="senha">Senha: </label></th></tr>
             <tr><td colspan='2'><input type="password" name="senha" id="senha" style="width:450px"></td></tr>
             <tr><td colspan='2'></br></td></tr>
-            <tr><th><center><input type="submit" value="Entrar" style="width:150px"></center></th>
+            <tr><th><center><input type="submit" value="Entrar" style="width:150px;align:right;"></center></th>
         </form></table></center>
     </body>
 </html>

@@ -12,16 +12,10 @@ if($_SESSION['administrador'] != 0){
         <meta charset="UTF-8">
         <title>Gerenciar Asilo - VivAsilo</title>
     </head>
-    <style>
-        table,tr,th,td{
-            border: 1px solid black;
-        }
-    </style>
     <body>
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <p><a href="painel.php"> Volta para o Painel</a></p><br/>
         <?php if($_SESSION['administrador'] == 0){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -120,7 +114,8 @@ if($_SESSION['administrador'] != 0){
                             $stmt = $pdo->prepare("DELETE FROM tb_asilo WHERE id_asilo = ?");
                             $stmt->bindParam(1, $id, PDO::PARAM_INT);
                             if ($stmt->execute()) {
-                                echo "Asilo deletado com sucesso!";
+                                ?> <div style="background-color:#4dff4d;"><b>Asilo deletado com sucesso!</b></div>
+                                <?php
                                 $id = null;
                             } else {
                                 throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
@@ -129,60 +124,97 @@ if($_SESSION['administrador'] != 0){
                             }
                     }?>
                     <form action="?act=save" method="POST" name="form1" >
-                        <h1>Cadastrar Asilo</h1>
+                        <header>Cadastrar Asilo</header>
+                         <div><a href="painel.php"> Volta para o Painel</a></div><br/>
+                        <center><table>
                         <input type="hidden" name="id" <?php
                         // Preenche o id no campo id com um valor "value"
                         if (isset($id) && $id != null || $id != "") {
                             echo "value=\"{$id}\"";
                         }?> />
-                        Nome: <input type="text" name="nome" <?php
+                        <tr><td><h3>Nome</h3></td>
+                            <td></td>
+                            <td style="width:20;"></td>
+                            <td><h3>Endereço:</h3></td>
+                            <td></td>
+                            <td style="width:20;"></td>
+                            <td><h3>CNPJ:</h3></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                        <td colspan="2"><input type="text" name="nome" <?php
                         // Preenche o nome no campo nome com um valor "value"
                         if (isset($nome) && $nome != null || $nome != ""){
                             echo "value=\"{$nome}\"";
-                        }?> />
-                        Endereço: <input type="text" name="endereco" <?php
+                            }?> /></td>
+                        <td style="width:20;"></td>
+                        
+                        <td colspan="2"><input type="text" name="endereco" style="width:440;"<?php
                         // Preenche o endereço no campo endereço com um valor "value"
                         if (isset($endereco) && $endereco != null || $endereco != ""){
                             echo "value=\"{$endereco}\"";
-                        }?> />
-                        CNPJ: <input type="text" name="cnpj" <?php
+                            }?> /></td>
+                        <td style="width:20;"></td>
+                        
+                        <td colspan="2"><input type="text" name="cnpj" <?php
                         // Preenche o cnpj no campo cnpj com um valor "value"
                         if (isset($cnpj) && $cnpj != null || $cnpj != ""){
                             echo "value=\"{$cnpj}\"";
-                        }?> />
-                        Telefone: <input type="text" name="telefone" <?php
+                            }?> /></td></tr>
+                        <tr><td><h3>Telefone:</h3></td>
+                            <td></td>
+                            <td style="width:20;"></td>
+                            <td><h3>Site:</h3></td>
+                            <td></td>
+                            <td style="width:20;"></td>
+                            <td><h3>Conta Bancaria:</h3></td></tr>
+                            <td></td>
+                        
+                         <tr><td colspan="2"><input type="text" name="telefone" style="width:440;" <?php
                         // Preenche o telefone no campo telefone com um valor "value"
                         if (isset($telefone) && $telefone != null || $telefone != ""){
                             echo "value=\"{$telefone}\"";
-                        }?> />
-                        Site: <input type="text" name="site" <?php
+                        }?> /></td>
+                             <td style="width:20;"></td>
+                        <td colspan="2"><input type="text" name="site" <?php
                         // Preenche o site no campo site com um valor "value"
                         if (isset($site) && $site != null || $site != ""){
                             echo "value=\"{$site}\"";
-                        }?> />
-                        Conta Bancaria: <input type="text" name="contabanco" <?php
+                        }?> /></td>
+                        <td style="width:20;"></td>
+                        <td colspan="2"><input type="text" name="contabanco" <?php
                         // Preenche a conta bancaria no campo conta bancaria com um valor "value"
                         if (isset($contabanco) && $contabanco != null || $contabanco != ""){
                             echo "value=\"{$contabanco}\"";
-                        }?> />
-                        URL da Foto: <input type="url" name="foto" <?php
+                            }?> /></td></tr>
+                         <tr><td><h3>URL da Foto:</h3></td>
+                             <td></td>
+                             <td style="width:20;"></td>
+                             <td><h3>Breve Descrição:</h3></td>
+                             <td></td>
+                             <td style="width:20;"></td>
+                             <td><h3>Necessidades:</h3></td></tr>
+                         <tr><td colspan="2"><input type="url" name="foto" style="width:440;"<?php
                         // Preenche a URL da Foto no campo URL das Foto com um valor "value"
                         if (isset($foto) && $foto != null || $foto != ""){
                             echo "value=\"{$foto}\"";
-                        }?> />
-                        Breve Descrição: <input type="text" name="desc" <?php
+                        }?> /></td>
+                             <td style="width:20;"></td>
+                        <td colspan="2"><input type="text" name="desc" <?php
                         // Preenche a breve descrição no campo desc com um valor "value"
                         if (isset($desc) && $desc != null || $desc != ""){
                             echo "value=\"{$desc}\"";
-                        }?> />
-                        Nescessidades: <input type="text" name="neces" <?php
+                        }?> /></td>
+                        <td style="width:20;"></td>
+                         <td colspan="2"><input type="text" name="neces" <?php
                         // Preenche a Nescessidades no campo nesces com um valor "value"
                         if (isset($neces) && $neces != null || $neces != ""){
                             echo "value=\"{$neces}\"";
-                        }?> />                        
-                        <br>
-                        <input type="submit" value="Salvar"/>
-                        <input type="reset" value="Resetar"/>
+                            }?> /></td></tr>                        
+                         <tr><td></br></td></tr>
+                        <tr><td colspan="6"></td>
+                            <td><input type="submit" value="SALVAR" style="width:250;"/></td>
+                            <td><input type="reset" value="RESETAR" style="width:250;"/></td></tr></table></center>
                     </form>
                     </b><h2>Meus Asilos:</h2>
                     <table border="1" width="100%">
