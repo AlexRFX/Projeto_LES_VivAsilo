@@ -1,6 +1,4 @@
 <?php
-// Include da NavBar
-include 'navbar.php';
 // inclui o arquivo de inicialização:
 require 'init.php';
 // Resgata variáveis do formulário do form-login.php:
@@ -31,15 +29,12 @@ $stmt->execute();
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Messagem de erro:
-?> 
-<?php
 if (count($users) <= 0){
     echo "login ou senha incorretos";?>
     <a href="index.php">Voltar para a pagina principal</a>
     <?php exit;
 }
-?>
-    <?php
+
 // Pega o usuário atual
 $user = $users[0];
 
