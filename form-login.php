@@ -24,7 +24,6 @@
             <tr><td colspan='2'><input type="password" name="senha" id="senha" style="width:450px"></td></tr>
             <tr><td colspan='2'></br></td></tr>
             <tr><th><center><input type="submit" value="Entrar" style="width:150px"></center></th>
-            <th><center><input type="submit" value="Cadastrar-se" action="" style="width:150px"></center></th></tr>
         </form></table></center>
     </body>
 </html>
