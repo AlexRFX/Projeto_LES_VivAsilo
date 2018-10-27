@@ -21,8 +21,8 @@ if($_SESSION['administrador'] != 1){
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <header>Painel de Controle do ADM</header>>
-        <div><a href="solicitations.php">Solicitações (NX)</a> | <a href="index.php">Home</a> | <a href="loginout.php"> Logout</a></div><br/>
+        <header>Painel de Controle do ADM</header>
+        <div><a href="solicitations.php">Solicitações (<?php echo requestcount(); ?>)</a> | <a href="index.php">Home</a> | <a href="loginout.php"> Logout</a></div><br/>
         <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

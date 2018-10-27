@@ -34,3 +34,16 @@ function maintainerch($id){
     }
     return false;
 }
+
+// Conta e retorna o número de requisições de cadastro de mantenedor:
+function requestcount(){
+    $pdo = db_connect();
+    $stmt = $pdo->prepare("SELECT a.id_usuario FROM tb_usuario a LEFT JOIN tb_mantenedor b ON a.id_usuario = b.fk_id WHERE a.administrador = 0 AND b.fk_id IS NULL");
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0) {
+        echo $stmt->rowCount();
+    }else{
+        echo "Nenhuma solicitação";
+    }
+}

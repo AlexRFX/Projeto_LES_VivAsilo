@@ -27,7 +27,7 @@ require 'init.php';
                     <div align="center"><p>Olá, visitante | <a href="form-register.php">Cadastrear-se</a> | <a href="form-login.php">Efetuar Login</a> | <a href="aboutus.php">Quem Somos</a> | <a href="contactus.php">Fale Conosco</a></p></div>
             <?php endif; ?>
             <!-- Exibe dos os asilos já cadastrados com uma foto, uma breve descrição e uma opção “ver mais” -->        
-</b><center><h2>Asilos em Praia Grande:</center></h2>
+            </b><center><h2>Asilos em Praia Grande:</center></h2>
                     <table border="1" width="100%">
                         <tr>
                             <th>Foto</th>

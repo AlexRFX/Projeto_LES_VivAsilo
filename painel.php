@@ -33,29 +33,29 @@ require 'logincheck.php';
                             
                 </br><a href="form-asilo.php">Gerenciar asilo</a></p></center></h3>
                             <br>
-                            <h2>Meus Asilos:</h2>
+                            <h2>Meu Asilo:</h2>
                             <table border="1" width="100%">
                                 <tr>
                                     <th>Foto</th>
                                     <th>Nome</th>
-                                    <th>Status</th>
+                                    <th>Breve Descrição</th>
+                                    <th>Ação</th>
                                 </tr>
                                 <?php try {
-                                // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
-                                $pdo = db_connect();
-                                $stmt = $pdo->prepare("SELECT nome_asilo, status_asilo, foto_asilo FROM tb_asilo WHERE fk_id = :id");
-                                $stmt->execute(array(':id' => $_SESSION['id_usuario']));
- 
-                                if ($stmt->execute()) {
+                                    // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
+                                    $pdo = db_connect();
+                                    $stmt = $pdo->prepare("SELECT id_asilo, nome_asilo, desc_asilo, foto_asilo FROM tb_asilo WHERE fk_id = :id");
+                                    $stmt->execute(array(':id' => $_SESSION['id_usuario'])); 
+                                    if ($stmt->execute()) {
                                     while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
                                         echo "<tr>";
-                                        echo "<td>".$rs->foto_asilo."</td><td>".$rs->nome_asilo."</td><td>".$rs->status_asilo;
-                                        echo "</tr>";
-                                        }} else {
-                                            echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
-                                        }} catch (PDOException $erro) {
-                                            echo "Erro: ".$erro->getMessage();
-                                        }?>
+                                        echo "<td><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo;?>
+                                        </td><td><a href="asilo.php?id=<?php echo $id['id'];?>" title="Ler mais">Ler mais</a></td></tr>
+                                    <?php }} else {
+                                        echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
+                                    }} catch (PDOException $erro) {
+                                        echo "Erro: ".$erro->getMessage();
+                                    }?>
                             </table>
                         <?php }
                     } ?>

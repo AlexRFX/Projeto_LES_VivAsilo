@@ -221,23 +221,21 @@ if($_SESSION['administrador'] != 0){
                         <tr>
                             <th>Foto</th>
                             <th>Nome</th>
-                            <th>Status</th>
+                            <th>Breve Descrição</th>
                             <th>Ação</th>
                         </tr>
                         <?php try {
-                        // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
-                        $pdo = db_connect();
-                        $stmt = $pdo->prepare("SELECT id_asilo, nome_asilo, status_asilo, foto_asilo FROM tb_asilo WHERE fk_id = :id");
-                        $stmt->execute(array(':id' => $_SESSION['id_usuario']));
- 
-                        if ($stmt->execute()) {
-                            while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
-                                echo "<tr>";
-                                echo "<td>".$rs->foto_asilo."</td><td>".$rs->nome_asilo."</td><td>".$rs->status_asilo
-                                ."</td><td><center><a href=\"?act=upd&id=" . $rs->id_asilo. "\">[Alterar]</a>"
-                                ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                                ."<a href=\"?act=del&id=" . $rs->id_asilo. "\">[Deletar]</a></center></td>";
-                                echo "</tr>";
+                            // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
+                            $pdo = db_connect();
+                            $stmt = $pdo->prepare("SELECT id_asilo, nome_asilo, desc_asilo, foto_asilo FROM tb_asilo WHERE fk_id = :id");
+                            $stmt->execute(array(':id' => $_SESSION['id_usuario'])); 
+                            if ($stmt->execute()) {
+                                while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+                                    echo "<tr>";
+                                    echo "<td><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo
+                                    ."</td><td><center><a href=\"?act=upd&id=" . $rs->id_asilo. "\">[Alterar]</a>"
+                                    ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+                                    ."<a href=\"?act=del&id=" . $rs->id_asilo. "\">[Deletar]</a></center></td>";
                                 }} else {
                                     echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
                                 }} catch (PDOException $erro) {
