@@ -19,22 +19,23 @@ require 'logincheck.php';
         // Include da NavBar
         include 'navbar.php';?>
         <header>Painel do Usuário - VivAsilo</header>
-        
-        <div>Bem-vindo ao seu painel, <?php echo $_SESSION['nm_usuario']; ?> | <a href="index.php">Página Principal</a> | <a href="loginout.php">Sair</a></div>
-        <br/><?php if($_SESSION['administrador'] != 1){?>
-    </br><center><h2>Alterações de Perfil:</h2>
-            <center><h3><a onclick="document.getElementById('id02').style.display='block'"> Editar e-mail</a></br>
-                <a onclick="document.getElementById('id03').style.display='block'"> Editar senha</a></br>
+        <?php if($_SESSION['administrador'] != 1){?>
+            <center>
+                <h2><span class="glyphicon glyphicon-pencil"></span>  Editar :</h2>
+                <h3>
+                    <a onclick="document.getElementById('id02').style.display='block'"><u>E-mail</u></a> | 
+                <a onclick="document.getElementById('id03').style.display='block'"><u>Senha</u></a> | 
             <?php if(maintainerch($_SESSION['id_usuario']) != true){?>
                 <p> Aguardando validação da conta.</p>
             <?php } else { ?>
-                <a onclick="document.getElementById('id04').style.display='block'"> Editar telefone</a></br>
-                <a onclick="document.getElementById('id05').style.display='block'"> Trocar foto</a></br>
-                            
-                </br><a href="form-asilo.php">Gerenciar asilo</a></p></center></h3>
+                <a onclick="document.getElementById('id04').style.display='block'"><u>Telefone</u></a> |
+                <a onclick="document.getElementById('id05').style.display='block'"><u>Foto</u></a></br></br>
+                            </h3>
+                </br><h2><a href="form-asilo.php"><span class="glyphicon glyphicon-plus"></span><u> Gerenciar asilo</u></a></h2></center>
                             <br>
-                            <h2>Meu Asilo:</h2>
-                            <table border="1" width="100%">
+                            <header>Meu Asilo:</header>
+                            </br>
+                            <table class="table" border="1" width="100%">
                                 <tr>
                                     <th>Foto</th>
                                     <th>Nome</th>

@@ -15,6 +15,7 @@ if($_SESSION['administrador'] != 1){
     <style>
         table,tr,th,td{
             border: 1px solid black;
+         
         }
     </style>
     <body>
@@ -22,7 +23,6 @@ if($_SESSION['administrador'] != 1){
         // Include da NavBar
         include 'navbar.php';?>
         <header>Painel de Controle do ADM</header>
-        <div><a href="solicitations.php">Solicitações (<?php echo requestcount(); ?>)</a> | <a href="index.php">Home</a> | <a href="loginout.php"> Logout</a></div><br/>
         <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -102,7 +102,7 @@ if($_SESSION['administrador'] != 1){
                             }
                     }?>
                     <form action="?act=save" method="POST" name="form1" >
-                        <center><h2>Registrar Usuário:</h2>
+                        <center><h2><u>Registrar Usuário:</u></h2>
                         <input type="hidden" name="id" <?php
                         // Preenche o id no campo id com um valor "value"
                         if (isset($id) && $id != null || $id != "") {
@@ -127,14 +127,16 @@ if($_SESSION['administrador'] != 1){
                         <td><input type="submit" value="Salvar"/></td>
                         <td><input type="reset" value="Resetar"/></center></td>
                     </form>
-                    <h2>Lista de Mantenedores:</h2>
+                    <header>Lista de Mantenedores:</header>
+                    </br>
+                    </br>
                     <table border="1" width="100%">
                         <tr>
-                            <th>Nome</th>
-                            <th>E-mail</th>
-                            <th>Telefone</th>
-                            <th>Foto</th>
-                            <th>Ação</th>
+                            <th><center>Nome</center></th>
+                            <th><center>E-mail</center></th>
+                            <th><center>Telefone</center></th>
+                            <th><center>Foto</center></th>
+                            <th><center>Ação</center></th>
                         </tr>
                         <?php try {
                             // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela

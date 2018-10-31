@@ -12,7 +12,6 @@
         include 'navbar.php';?>
         
         <header><b>Cadastro - VivAsilo</b></header>
-        <center><a href="index.php"><h3>Voltar para a pagina principal</h3></a></center>
         <br>
         <br>
         <center><table>

@@ -8,6 +8,7 @@ $senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 if (empty($email) || empty($senhaHash)){
         // Include da NavBar
         include 'navbar.php';
+        include 'longin.css';
     ?> <center><h2>Informe email e senha</h2>
     <?php
     //header('Refresh:5; form-login.php');?>

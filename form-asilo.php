@@ -125,7 +125,6 @@ if($_SESSION['administrador'] != 0){
                     }?>
                     <form action="?act=save" method="POST" name="form1" >
                         <header>Cadastrar Asilo</header>
-                         <div><a href="painel.php"> Volta para o Painel</a></div><br/>
                         <center><table>
                         <input type="hidden" name="id" <?php
                         // Preenche o id no campo id com um valor "value"
@@ -216,8 +215,8 @@ if($_SESSION['administrador'] != 0){
                             <td><input type="submit" value="SALVAR" style="width:250;"/></td>
                             <td><input type="reset" value="RESETAR" style="width:250;"/></td></tr></table></center>
                     </form>
-                    </b><h2>Meus Asilos:</h2>
-                    <table border="1" width="100%">
+                    </b><header>Meus Asilos:</header>
+                    <table class="table" border="1" width="100%">
                         <tr>
                             <th>Foto</th>
                             <th>Nome</th>

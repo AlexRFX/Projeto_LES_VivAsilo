@@ -15,15 +15,13 @@ if($_SESSION['administrador'] != 1){
     <style>
         table,tr,th,td{
             border: 1px solid black;
-            
         }
     </style>
     <body>
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <header>Painel de Controle do ADM</header>
-        <div><a href="admpainel.php"> Painel do ADM</a> | <a href="loginout.php"> Logout</a></div><br/>
+        <header>Solicitações</header>
         <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -66,7 +64,7 @@ if($_SESSION['administrador'] != 1){
             }
         }?>
         
-        <h2>Lista de Cadastro Pendente:</h2>
+        <h2><center><u>Lista de Cadastros Pendentes:</u></center></h2>
         <table border="1" width="100%">
             <tr>
                 <th><center>Nome</center></th>
