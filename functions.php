@@ -2,7 +2,7 @@
 // Função que conecta com o MySQL usando PDO:
 function db_connect(){
     try{
-        //$pdo=new PDO("mysql:host=localhost;dbname=dbvivasilo", "root", "");
+        //$pdo=new PDO("mysql:host=localhost;dbname=id7042898_dbvivasilo", "root", "");
         $pdo=new PDO("mysql:host=localhost;dbname=id7042898_dbvivasilo", "id7042898_admin", "vivasilo");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $pdo;
@@ -29,6 +29,18 @@ function maintainerch($id){
     $pdo = db_connect();
     $stmt = $pdo->prepare("SELECT fk_id FROM tb_mantenedor WHERE fk_id = :id");
     $stmt->bindParam(':id', $id); $stmt->execute();
+    if ($stmt->rowCount() > 0) {
+        return true;
+    }
+    return false;
+}
+
+// Verifica se é mantenedor do asilo:
+function maintaincheck($id_mantenedor, $id_asilo){
+    $pdo = db_connect();
+    $stmt = $pdo->prepare("SELECT status_asilo FROM tb_asilo WHERE fk_id = $id_mantenedor AND id_asilo = $id_asilo");
+    //$stmt->bindParam(':id_mantenedor', $id_mantenedor); $stmt->bindParam(':id_asilo', $id_asilo);
+    $stmt->execute();
     if ($stmt->rowCount() > 0) {
         return true;
     }

@@ -2,7 +2,7 @@
 ---- É de extrema importancia pegar o arquivo SQL do banco de dados no host 000.webhost!
 -->
 <?php
-//session_start();
+session_start();
 // inclui o arquivo de inicializão:
 require 'init.php';?>
 <!doctype html>
@@ -17,15 +17,75 @@ require 'init.php';?>
         include 'navbar.php';?>
         <header><b>VivAsilo</b></h1></center></header>
         <?php
-        // pega o id_asilo da pagina index.php:
+        // pega o id_asilo do asilo:
         $id = $_GET['id'];
+        // recebe dados via POST:    
+        $pessoa = isset($_POST['pessoa']) ? $_POST['pessoa'] : '';
+        $data = date("y/m/d");           
+        $comentario = isset($_POST['comentario']) ? $_POST['comentario'] : '';
+        $fk = isset($_POST['fk']) ? $_POST['fk'] : '';
+        
+        // Envia um comentario somente se não tiver chave estrangeira de outro comentario:
+        if(isset($_REQUEST['submit_cmt']) && $id != "" && $fk == null){
+            $pdo = db_connect();
+            try {
+                $stmt = $pdo->prepare("INSERT INTO tb_comentario (`fk_asilo`, `nome_comentario`, `resposta_comentario`, `data_comentario`, `fk_comentario`) VALUES (?, ?, ?, ?, NULL)");
+                $stmt->bindParam(1, $id);
+                $stmt->bindParam(2, $pessoa);
+                $stmt->bindParam(3, $comentario);
+                $stmt->bindParam(4, $data);
+                if ($stmt->execute()) {
+                    if ($stmt->rowCount() > 0) {
+                        echo "<br><b>Comentario realizado com sucesso!</b><br>";
+                        $pessoa = null;
+                        $comentario = null;
+                        $data = null;
+                        echo "<meta http-equiv='refresh' content='3'>";
+                    } else {
+                        echo "<br><b>Deu erro no envio!</b><br>";
+                    }
+                } else {
+                    throw new PDOException("<br><b>Erro: Não conseguiu executar a declaração SQL!</b><br>");
+                }
+            } catch (PDOException $erro) {
+                echo "Erro: " . $erro->getMessage();
+            }             
+        }else{
+        // Envia uma resposta somente se tiver chave estrangeira de outro comentario:
+        }if (isset($_REQUEST['submit_res']) && $id != "" && $fk != null){
+            $pdo = db_connect();
+            try {
+                $stmt = $pdo->prepare("INSERT INTO tb_comentario (`fk_asilo`, `nome_comentario`, `resposta_comentario`, `data_comentario`, `fk_comentario`) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bindParam(1, $id);
+                $stmt->bindParam(2, $pessoa);
+                $stmt->bindParam(3, $comentario);
+                $stmt->bindParam(4, $data);
+                $stmt->bindParam(5, $fk);
+                if ($stmt->execute()) {
+                    if ($stmt->rowCount() > 0) {
+                        echo "<br><b>Resposta enviada com sucesso!</b><br>";
+                        $pessoa = null;
+                        $comentario = null;
+                        $data = null;
+                        $fk = null;
+                        echo "<meta http-equiv='refresh' content='3'>";
+                    } else {
+                        echo "<br><b>Deu erro no envio!</b><br>";
+                    }
+                } else {
+                    throw new PDOException("<br><b>Erro: Não conseguiu executar a declaração SQL!</b><br>");
+                }
+            } catch (PDOException $erro) {
+                echo "Erro: " . $erro->getMessage();
+            }
+        }
         // conecta com o banco; executa a query; exibe os dados do asilo:
         try {
             $pdo = db_connect();
             $stmt = $pdo->prepare("SELECT * FROM tb_asilo WHERE id_asilo = $id");
             if ($stmt->execute()) {
                 $rs = $stmt->fetch(PDO::FETCH_OBJ);
-                // exibe na pagina os dados do asilo:
+                // exibe na pagina os dados do asilo, organize ao seu gosto:
                 echo "<br>Foto do Asilo:" .$rs->foto_asilo;
                 echo "<br>Nome do Asilo:" .$rs->nome_asilo;
                 echo "<br>Endereço do Asilo:" .$rs->endereco_asilo;
@@ -37,7 +97,7 @@ require 'init.php';?>
                 echo "<br>Conta Bancaria do Asilo:" .$rs->dbanco_asilo;
                 echo "<br>Comentarios do Asilo:" .$rs->fk_comentario;
             } else {
-                echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
+                echo "<br><b>Erro: Não conseguiu recupaerar os dados do Banco de Dados!</b><br>";
             }} catch (PDOException $erro) {
                 echo "Erro: ".$erro->getMessage();
             }?>
@@ -46,52 +106,93 @@ require 'init.php';?>
         <?php
         try {
             $pdo = db_connect();
-            $stmt = $pdo->prepare("SELECT * FROM tb_comentario WHERE fk_asilo = $id ORDER BY id_comentario desc");
+            $stmt = $pdo->prepare("SELECT * FROM tb_comentario WHERE fk_asilo = $id AND fk_comentario IS NULL ORDER BY id_comentario DESC");
             if ($stmt->execute()) {
-                // exibe os comentarios do do asilo:
+                // exibe os comentarios do asilo:
                 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)){
-                    echo "</hr>".$rs->data_comentario."</br>".$rs->nome_comentario."</br>".$rs->resposta_comentario."<br>"
-                        ."<a href=\"?act=res&id=" . $rs->id_comentario. "\">[Responder]</a></br><hr>";
+                    echo "</hr>Data: ".$rs->data_comentario."</br>".$rs->nome_comentario.", Disse:</br>".$rs->resposta_comentario."<br>";
+                        // verifica se o usuario logado é mantenedor do asilo, e libera o botão de excluir comentario:
+                        if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){
+                            echo "<a href=\"?act=del&id=" . $rs->id_comentario. "\">[Excluir]</a>";  
+                        }
+                        echo "</br><hr>";
+                        // exibe os as respostas dos comentarios do asilo:
+                        $sql = $pdo->prepare("SELECT * FROM tb_comentario WHERE fk_asilo = $id AND fk_comentario = $rs->id_comentario ORDER BY id_comentario ASC");
+                        if ($sql->execute()) {
+                            // exibe os comentarios do do asilo:
+                            while ($sr = $sql->fetch(PDO::FETCH_OBJ)){
+                                echo "</hr>Data: ".$sr->data_comentario."</br>".$sr->nome_comentario.", Respondeu:</br>".$sr->resposta_comentario."<br>";
+                                // verifica se o usuario logado é mantenedor do asilo, e libera o botão de excluir resposta de comentario:
+                                if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){
+                                    echo "<a href=\"?act=del&id=" . $sr->id_comentario. "\">[Excluir]</a>";  
+                                }
+                                echo "</br><hr>";
+                            }
+                        }?>
+                    <a onclick="document.getElementById('id71').style.display='block'"><h2>Responder comentario</h2></a>
+                    <!-- Formularios resposta de comentario(ID71) (Está bugado:): -->
+                    <div id="id71" class="modal"> 
+                    <form action="" method="post" class="modal-content animate">
+                        <div class="imgcontainer">
+                            <span onclick="document.getElementById('id71').style.display='none'" class="close" title="Close Modal">&times;</span>
+                        </div>
+                        <h2>Responder comentario</h2>
+                        <label for="pessoa"><b>Nome:</b></label><br>
+                        <input type="text" placeholder="Digite o seu nome" name="pessoa" id="pessoa" required>   
+                        <br><br>
+                        <label for="comentario"><b>Comentario:</b></label><br>
+                        <input type="text" placeholder="Digite o seu comentario" name="comentario" id="comentario" required>
+                        <br><br>
+                        <button type="submit" name="submit_res">Enviar</button>
+                        <input  type="hidden" id="fk" name="fk" value="<?php echo htmlspecialchars($rs->id_comentario); ?>">
+                        <button type="reset">Limpar</button>
+                        <button type="button" onclick="document.getElementById('id71').style.display='none'" class="cancelbtn">Cancelar</button>    
+                    </form>
+                </div>
+                <br>
+                <!-- formulario de Resposta de Comentario padrão (funciona): -->
+                <form action="" method="post">
+                    <label for="pessoa">Nome: </label><br>
+                    <input type="text" name="pessoa" id="pessoa" required>
+                    <br><br>
+                    <label for="comentario">Comentario: </label><br>
+                    <input type="text" name="comentario" id="comentario" required>
+                    <br><br>
+                    <input type="submit" value="Enviar" name="submit_res">
+                    <input type="hidden" id="fk" name="fk" value="<?php echo htmlspecialchars($rs->id_comentario); ?>">
+                    <input type=reset value=Limpar>
+                </form>
+                <hr>
+                <?php
                 }
             } else {
-                echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
-            }} catch (PDOException $erro) {
-                echo "Erro: ".$erro->getMessage();
-            }?>
-        <hr>
-        <br>
-        <h2>Fazer comentario</h2>
-        <?php
-        $pessoa = isset($_POST['pessoa']) ? $_POST['pessoa'] : '';
-        $data = date("y/m/d");           
-        $comentario = isset($_POST['comentario']) ? $_POST['comentario'] : '';
-        
-        // Envia um comentario somente se receber o parametro nome:
-        if(isset($_REQUEST['submit_cmt']) && $id != ""){
-            $pdo = db_connect();
-            try {
-                $stmt = $pdo->prepare("INSERT INTO tb_comentario (`fk_asilo`, `nome_comentario`, `resposta_comentario`, `data_comentario`, `fk_comentario`) VALUES (?, ?, ?, ?, NULL)");
-                $stmt->bindParam(1, $id);
-                $stmt->bindParam(2, $pessoa);
-                $stmt->bindParam(3, $comentario);
-                $stmt->bindParam(4, $data);
-                if ($stmt->execute()) {
-                    if ($stmt->rowCount() > 0) {
-                        echo "Comentario realizado com sucesso!";
-                        $pessoa = null;
-                        $comentario = null;
-                        $data = null;
-                        echo "<meta http-equiv='refresh' content='3'>";
-                    } else {
-                        echo "Deu erro no envio!";
-                    }
-                } else {
-                    throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
-                }
-            } catch (PDOException $erro) {
-                echo "Erro: " . $erro->getMessage();
-            }             
+                echo "<br><b>Erro: Não conseguiu recupaerar os dados do Banco de Dados!</b><br>";
+        }} catch (PDOException $erro) {
+            echo "Erro: ".$erro->getMessage();
         }?>
+        <!-- Botão que invoca modal de cadastro de comentario: -->
+        <a onclick="document.getElementById('id70').style.display='block'"><h2>Fazer comentario</h2></a> 
+        
+        <!-- Formularios de comentario(ID70): -->
+        <div id="id70" class="modal"> 
+            <form action="" method="post" class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id70').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <h2>Fazer comentario</h2>
+                <label for="pessoa"><b>Nome:</b></label><br>
+                <input type="text" placeholder="Digite o seu nome" name="pessoa" id="pessoa" required>   
+                <br><br>
+                <label for="comentario"><b>Comentario:</b></label><br>
+                <input type="text" placeholder="Digite o seu comentario" name="comentario" id="comentario" required>
+                <br><br>
+                <button type="submit" name="submit_cmt">Enviar</button>
+                <button type="reset">Limpar</button>
+                <button type="button" onclick="document.getElementById('id70').style.display='none'" class="cancelbtn">Cancelar</button>    
+            </form>
+        </div>
+        <br>
+        <!-- formulario de Comentario padrão (Faz a mesma coisa que o de cima): -->
         <form action="" method="post">
             <label for="pessoa">Nome: </label><br>
             <input type="text" name="pessoa" id="pessoa" required>
@@ -103,5 +204,16 @@ require 'init.php';?>
             <input type=reset value=Limpar>
         </form>
         <hr>
+        <script>
+            // Invoca modal:
+            var modal = document.getElementById('id70') || document.getElementById('id71');
+
+            // Quando clicar em qualquer lugar fora do modal; fecha:
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
+        </script>
     </body>
 </html>
