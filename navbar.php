@@ -13,11 +13,11 @@ require 'init.php';
 <style type="text/css">
     header{
         font-size:25pt;
-        background-color:#E4F4C2;
+        background-color:#F3E2A9;
         text-align: center;
     }
     body{
-        background-color:#C8E38E;
+        background-color:#F7F8E0;
     }
     th{
 	font-size:14pt;

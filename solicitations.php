@@ -15,14 +15,15 @@ if($_SESSION['administrador'] != 1){
     <style>
         table,tr,th,td{
             border: 1px solid black;
+            
         }
     </style>
     <body>
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <h1>Painel de Controle do ADM</h1>
-        <p><a href="admpainel.php"> Painel do ADM</a> | <a href="loginout.php"> Logout</a></p><br/>
+        <header>Painel de Controle do ADM</header>
+        <div><a href="admpainel.php"> Painel do ADM</a> | <a href="loginout.php"> Logout</a></div><br/>
         <?php if($_SESSION['administrador'] == 1){ 
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -68,9 +69,9 @@ if($_SESSION['administrador'] != 1){
         <h2>Lista de Cadastro Pendente:</h2>
         <table border="1" width="100%">
             <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Ação</th>
+                <th><center>Nome</center></th>
+                <th><center>E-mail</center></th>
+                <th><center>Ação</center></th>
             </tr>
             <?php try {
                 // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
