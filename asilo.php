@@ -24,6 +24,7 @@ require 'init.php';?>
         $data = date("y/m/d");           
         $comentario = isset($_POST['comentario']) ? $_POST['comentario'] : '';
         $fk = isset($_POST['fk']) ? $_POST['fk'] : '';
+        $cmt = isset($_POST['cmt']) ? $_POST['cmt'] : '';
         
         // Envia um comentario somente se não tiver chave estrangeira de outro comentario:
         if(isset($_REQUEST['submit_cmt']) && $id != "" && $fk == null){
@@ -50,9 +51,31 @@ require 'init.php';?>
             } catch (PDOException $erro) {
                 echo "Erro: " . $erro->getMessage();
             }             
-        }else{
+        }
+        // Censura um comentario:
+        if(isset($_REQUEST['censorship_cmt']) && $id != "" && $cmt != null){
+            $pdo = db_connect();
+            try {
+                $stmt = $pdo->prepare("UPDATE tb_comentario SET resposta_comentario = '--CENSURADO--' WHERE fk_asilo = ? AND id_comentario = ?");
+                $stmt->bindParam(1, $id);
+                $stmt->bindParam(2, $cmt);
+                if ($stmt->execute()) {
+                    if ($stmt->rowCount() > 0) {
+                        echo "<br><b>Comentario censurado com sucesso!</b><br>";
+                        $cmt = null;
+                        echo "<meta http-equiv='refresh' content='3'>";
+                    } else {
+                        echo "<br><b>Deu erro no envio!</b><br>";
+                    }
+                } else {
+                    throw new PDOException("<br><b>Erro: Não conseguiu executar a declaração SQL!</b><br>");
+                }
+            } catch (PDOException $erro) {
+                echo "Erro: " . $erro->getMessage();
+            }             
+        }
         // Envia uma resposta somente se tiver chave estrangeira de outro comentario:
-        }if (isset($_REQUEST['submit_res']) && $id != "" && $fk != null){
+        if (isset($_REQUEST['submit_res']) && $id != "" && $fk != null){
             $pdo = db_connect();
             try {
                 $stmt = $pdo->prepare("INSERT INTO tb_comentario (`fk_asilo`, `nome_comentario`, `resposta_comentario`, `data_comentario`, `fk_comentario`) VALUES (?, ?, ?, ?, ?)");
@@ -112,8 +135,11 @@ require 'init.php';?>
                 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)){
                     echo "</hr>Data: ".$rs->data_comentario."</br>".$rs->nome_comentario.", Disse:</br>".$rs->resposta_comentario."<br>";
                         // verifica se o usuario logado é mantenedor do asilo, e libera o botão de excluir comentario:
-                        if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){
-                            echo "<a href=\"?act=del&id=" . $rs->id_comentario. "\">[Excluir]</a>";  
+                        if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){?>
+                            <form action="" method="post">
+                                <input type="submit" value="Censurar" name="censorship_cmt">
+                                <input type="hidden" id="cmt" name="cmt" value="<?php echo htmlspecialchars($rs->id_comentario); ?>">
+                            </form><?php
                         }
                         echo "</br><hr>";
                         // exibe os as respostas dos comentarios do asilo:
@@ -123,8 +149,11 @@ require 'init.php';?>
                             while ($sr = $sql->fetch(PDO::FETCH_OBJ)){
                                 echo "</hr>Data: ".$sr->data_comentario."</br>".$sr->nome_comentario.", Respondeu:</br>".$sr->resposta_comentario."<br>";
                                 // verifica se o usuario logado é mantenedor do asilo, e libera o botão de excluir resposta de comentario:
-                                if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){
-                                    echo "<a href=\"?act=del&id=" . $sr->id_comentario. "\">[Excluir]</a>";  
+                                if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){?>
+                                    <form action="" method="post">
+                                        <input type="submit" value="Censurar" name="censorship_cmt">
+                                        <input type="hidden" id="cmt" name="cmt" value="<?php echo htmlspecialchars($sr->id_comentario); ?>">
+                                    </form><?php 
                                 }
                                 echo "</br><hr>";
                             }
