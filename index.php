@@ -44,9 +44,9 @@ require 'init.php';
                         if ($stmt->execute()) {
                             while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
                                 echo "<tr>";
-                                echo "<td><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo;?>
-                    </td><td><a href="asilo.php?id=<?php echo $id['id'];?>" title="Ler mais"><u> Ver mais</u></a></td></tr>
-                                <?php }} else {
+                                echo "<td><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo
+                                ."</td><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ler Mais]</u></a></td></tr>";
+                                }} else {
                                     echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
                                 }} catch (PDOException $erro) {
                                     echo "Erro: ".$erro->getMessage();
