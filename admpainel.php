@@ -15,7 +15,7 @@ if($_SESSION['administrador'] != 1){
     <style>
         table,tr,th,td{
             border: 1px solid black;
-         
+            text-align: center;
         }
     </style>
     <body>

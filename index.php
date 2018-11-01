@@ -9,6 +9,12 @@ require 'init.php';
         <meta charset="utf-8">
 
         <title>Home - VivAsilo</title>
+        <style>
+            td,tr,th{
+                text-align: center;
+            }
+            
+        </style>
     </head>
 
     <body>
@@ -29,13 +35,7 @@ require 'init.php';
     </b><header>Asilos em Praia Grande</header>
     </br>
     </br>
-                    <table class="table" width="100%">
-                        <tr>
-                            <th>Foto</th>
-                            <th>Nome</th>
-                            <th>Breve Descrição</th>
-                            <th> </th>
-                        </tr>
+                    <center><table class="table">
                         <?php try {
                         // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                         $pdo = db_connect();
@@ -43,15 +43,20 @@ require 'init.php';
  
                         if ($stmt->execute()) {
                             while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
-                                echo "<tr>";
-                                echo "<td><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo
-                                ."</td><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ler Mais]</u></a></td></tr>";
+                                ?>
+                            <tr><td colspan="3">
+                                <?php
+                                echo "<h3><b>".$rs->nome_asilo."</b></h3></td></tr>";
+                                ?>
+                                <tr><td rowspan="3" align="center">    <?php
+                                echo "<img src=".$rs->foto_asilo."></td></tr><tr><td><h3>Descrição do asilo:</h3>".$rs->desc_asilo
+                                ."</td></tr><tr><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ver Mais]</u></a></td></tr></tr>";
                                 }} else {
                                     echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
                                 }} catch (PDOException $erro) {
                                     echo "Erro: ".$erro->getMessage();
                                 }?>
-                    </table>
+                        </table></center>
     </body>
 </html>
 

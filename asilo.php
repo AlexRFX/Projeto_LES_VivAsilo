@@ -10,12 +10,19 @@ require 'init.php';?>
     <head>
         <meta charset="utf-8">
         <title>Asilo - VivAsilo</title>
+        <style>
+            h3{
+                font-weight: bold;
+            }
+            td, th{
+                text-align: center;
+            }
+            </style>
     </head>
     <body>
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <header><b>VivAsilo</b></h1></center></header>
         <?php
         // pega o id_asilo do asilo:
         $id = $_GET['id'];
@@ -109,21 +116,76 @@ require 'init.php';?>
             if ($stmt->execute()) {
                 $rs = $stmt->fetch(PDO::FETCH_OBJ);
                 // exibe na pagina os dados do asilo, organize ao seu gosto:
-                echo "<br>Foto do Asilo:" .$rs->foto_asilo;
-                echo "<br>Nome do Asilo:" .$rs->nome_asilo;
-                echo "<br>Endereço do Asilo:" .$rs->endereco_asilo;
-                echo "<br>CNPJ do Asilo:" .$rs->cnpj_asilo;
-                echo "<br>Telefone do Asilo:" .$rs->tel_asilo;
-                echo "<br>Descrição do Asilo:" .$rs->desc_asilo;
-                echo "<br>Nescessidades do Asilo:" .$rs->neces_asilo;
-                echo "<br>Site do Asilo:" .$rs->site_asilo;
-                echo "<br>Conta Bancaria do Asilo:" .$rs->dbanco_asilo;
-                echo "<br>Comentarios do Asilo:" .$rs->fk_comentario;
+                ?>
+        <header><b><?php echo $rs->nome_asilo; ?></b></header>
+                <table class="table">
+                    <tr>
+                        <th rowspan="8">
+                    <?php
+                echo "<img src=".$rs->foto_asilo.">";
+                ?>
+                        </th>
+                    <tr>
+                    <th colspan="2">
+                    <center>Endereço:</center></th>
+                    <th>
+                        <center>Dados Bancários:</center></th>
+                    </tr>
+                    <tr>
+                    <td colspan="2">
+                    <?php
+                echo $rs->endereco_asilo;
+                ?>  </td>
+                    <td>
+                    <?php
+                echo $rs->dbanco_asilo;
+                ?> </td>
+                    <tr>
+                        <th>
+                       <center> Telefone:</center></th>
+                    <th>
+                       <center> CNPJ:</center></th>
+                    <th>
+                        <center>Site:</center></th>
+                    </tr>
+                    <tr>
+                    <td>
+                    <?php
+                echo $rs->tel_asilo;
+                ?> </td>
+                    <td>
+                    <?php
+                echo $rs->cnpj_asilo;
+                ?> </td>
+                    <td>
+                    <?php
+                echo $rs->site_asilo;
+                ?> </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <center>Descrição:</center></th>
+                        <th colspan="1">
+                            <center>Necessidades:</center></th>
+                    </tr>
+                    <tr>
+                    <td colspan="2">
+                    <?php
+                echo $rs->desc_asilo;
+                ?>  
+                    </td>
+                    <td colspan="1">
+                    <?php
+                echo $rs->neces_asilo;
+                ?> </td></tr></table><?php
+                echo "$rs->fk_comentario;"
+                ?><?php
             } else {
                 echo "<br><b>Erro: Não conseguiu recupaerar os dados do Banco de Dados!</b><br>";
             }} catch (PDOException $erro) {
                 echo "Erro: ".$erro->getMessage();
             }?>
+           
         <hr>
         <h2>Comentarios</h2>
         <?php

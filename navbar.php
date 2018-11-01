@@ -60,6 +60,10 @@ require 'init.php';
         text-align: center;
     }
     a { color: inherit; }
+    img{
+        width:450px;
+        lidth:200px;      
+    }
     <?php include 'css/login.css'; ?></style>
 </style>
 </head>

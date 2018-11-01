@@ -65,7 +65,8 @@ if($_SESSION['administrador'] != 0){
                 $stmt->bindParam(9, $neces);
                 if ($stmt->execute()) {
                     if ($stmt->rowCount() > 0) {
-                        echo "Asilo cadastrado com sucesso!";
+                        ?> <center> <h3 style="background-color:#A9F5A9;"> Asilo cadastrado/editado com sucesso! </h3> </center>
+                            <?php
                         $nome = NULL;
                         $endereco = NULL;
                         $cnpj = NULL;
@@ -76,7 +77,8 @@ if($_SESSION['administrador'] != 0){
                         $desc = NULL;
                         $neces = NULL;
                     } else {
-                        echo "Deu erro no cadastro!";
+                        ?> <center> <h3 style="background-color:#F78181;"> Erro no cadastro! Tente Novamente.</h3> </center>
+                          <?php
                     }} else {
                         throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
                     }} catch (PDOException $erro) {
