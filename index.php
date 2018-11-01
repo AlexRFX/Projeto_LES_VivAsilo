@@ -35,7 +35,7 @@ require 'init.php';
     </b><header>Asilos em Praia Grande</header>
     </br>
     </br>
-                    <center><table class="table">
+                    <center><table class="table" align="left" width="100%">
                         <?php try {
                         // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                         $pdo = db_connect();
@@ -43,14 +43,11 @@ require 'init.php';
  
                         if ($stmt->execute()) {
                             while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+                                echo "<tr>";
                                 ?>
-                            <tr><td colspan="3">
-                                <?php
-                                echo "<h3><b>".$rs->nome_asilo."</b></h3></td></tr>";
-                                ?>
-                                <tr><td rowspan="3" align="center">    <?php
-                                echo "<img src=".$rs->foto_asilo."></td></tr><tr><td><h3>Descrição do asilo:</h3>".$rs->desc_asilo
-                                ."</td></tr><tr><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ver Mais]</u></a></td></tr></tr>";
+                                <td rowspan="3" align="center">    <?php
+                                echo "<img src=".$rs->foto_asilo."></td><td><h3><b>".$rs->nome_asilo."</b></h3></td></tr><tr><td><h3>Descrição do asilo:</b></h3></br>".$rs->desc_asilo
+                                ."</td></tr><tr><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ver Mais]</u></a></td></tr></tr><tr></tr>";
                                 }} else {
                                     echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
                                 }} catch (PDOException $erro) {
