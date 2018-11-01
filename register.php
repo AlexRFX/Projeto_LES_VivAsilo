@@ -1,6 +1,7 @@
 <?php
 // inclui o arquivo de inicialização:
 require 'init.php';
+ include 'navbar.php';
 // Resgata variáveis do formulário do form-register.php:
 $nome = isset($_POST['nome']) ? $_POST['nome'] : '';
 $email = isset($_POST['email']) ? $_POST['email'] : '';

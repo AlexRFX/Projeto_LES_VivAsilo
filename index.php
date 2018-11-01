@@ -53,8 +53,9 @@ require 'init.php';
                                 }} catch (PDOException $erro) {
                                     echo "Erro: ".$erro->getMessage();
                                 }?>
-                        </table></center>
+                        </table>
     </body>
+ 
 </html>
 
 

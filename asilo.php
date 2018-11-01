@@ -120,11 +120,11 @@ require 'init.php';?>
         <header><b><?php echo $rs->nome_asilo; ?></b></header>
                 <table class="table">
                     <tr>
-                        <th rowspan="8">
+                        <th rowspan="8"><center>
                     <?php
                 echo "<img src=".$rs->foto_asilo.">";
                 ?>
-                        </th>
+                    </center></th>
                     <tr>
                     <th colspan="2">
                     <center>Endereço:</center></th>
@@ -187,7 +187,8 @@ require 'init.php';?>
             }?>
            
         <hr>
-        <h2>Comentarios</h2>
+        <header>Comentarios</header>
+    <center>
         <?php
         try {
             $pdo = db_connect();
@@ -195,64 +196,65 @@ require 'init.php';?>
             if ($stmt->execute()) {
                 // exibe os comentarios do asilo:
                 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)){
-                    echo "</hr>Data: ".$rs->data_comentario."</br>".$rs->nome_comentario.", Disse:</br>".$rs->resposta_comentario."<br>";
+                    ?>
+        <div style="background-color:white;">
+            </br>
+            <h5>        
+            <?php 
+                    echo $rs->data_comentario."</br>";
+                    ?></h5>
+            <?php
+            echo$rs->nome_comentario.": </br>".$rs->resposta_comentario."";
                         // verifica se o usuario logado é mantenedor do asilo, e libera o botão de excluir comentario:
                         if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){?>
                             <form action="" method="post">
-                                <input type="submit" value="Censurar" name="censorship_cmt">
+                                <input type="submit" value="Censurar" name="censorship_cmt" style="size:50px;">
                                 <input type="hidden" id="cmt" name="cmt" value="<?php echo htmlspecialchars($rs->id_comentario); ?>">
                             </form><?php
                         }
                         echo "</br><hr>";
+                        ?>
+        <?php
                         // exibe os as respostas dos comentarios do asilo:
                         $sql = $pdo->prepare("SELECT * FROM tb_comentario WHERE fk_asilo = $id AND fk_comentario = $rs->id_comentario ORDER BY id_comentario ASC");
                         if ($sql->execute()) {
                             // exibe os comentarios do do asilo:
                             while ($sr = $sql->fetch(PDO::FETCH_OBJ)){
-                                echo "</hr>Data: ".$sr->data_comentario."</br>".$sr->nome_comentario.", Respondeu:</br>".$sr->resposta_comentario."<br>";
+                                ?><h5><?php echo $sr->data_comentario."</h5>".$sr->nome_comentario.", Respondeu:</br>".$sr->resposta_comentario;
                                 // verifica se o usuario logado é mantenedor do asilo, e libera o botão de excluir resposta de comentario:
                                 if ((LoggedIn() == true) && (maintaincheck($_SESSION['id_usuario'], $_GET['id']) == true)){?>
                                     <form action="" method="post">
-                                        <input type="submit" value="Censurar" name="censorship_cmt">
+                                        <input type="submit" value="Censurar" name="censorship_cmt" style="size:50px;">
                                         <input type="hidden" id="cmt" name="cmt" value="<?php echo htmlspecialchars($sr->id_comentario); ?>">
                                     </form><?php 
                                 }
                                 echo "</br><hr>";
                             }
-                        }?>
-                    <a onclick="document.getElementById('id71').style.display='block'"><h2>Responder comentario</h2></a>
+                            }?></div>
+        <h2><b>Responder comentario</b></h2>
                     <!-- Formularios resposta de comentario(ID71) (Está bugado:): -->
-                    <div id="id71" class="modal"> 
-                    <form action="" method="post" class="modal-content animate">
-                        <div class="imgcontainer">
-                            <span onclick="document.getElementById('id71').style.display='none'" class="close" title="Close Modal">&times;</span>
-                        </div>
-                        <h2>Responder comentario</h2>
-                        <label for="pessoa"><b>Nome:</b></label><br>
-                        <input type="text" placeholder="Digite o seu nome" name="pessoa" id="pessoa" required>   
-                        <br><br>
-                        <label for="comentario"><b>Comentario:</b></label><br>
-                        <input type="text" placeholder="Digite o seu comentario" name="comentario" id="comentario" required>
-                        <br><br>
-                        <button type="submit" name="submit_res">Enviar</button>
-                        <input  type="hidden" id="fk" name="fk" value="<?php echo htmlspecialchars($rs->id_comentario); ?>">
-                        <button type="reset">Limpar</button>
-                        <button type="button" onclick="document.getElementById('id71').style.display='none'" class="cancelbtn">Cancelar</button>    
-                    </form>
-                </div>
+                    
                 <br>
                 <!-- formulario de Resposta de Comentario padrão (funciona): -->
                 <form action="" method="post">
-                    <label for="pessoa">Nome: </label><br>
-                    <input type="text" name="pessoa" id="pessoa" required>
-                    <br><br>
-                    <label for="comentario">Comentario: </label><br>
-                    <input type="text" name="comentario" id="comentario" required>
-                    <br><br>
-                    <input type="submit" value="Enviar" name="submit_res">
+                    <table>
+                        <tr>
+                            <td><label for="pessoa"><h3>Nome: </h3></label></td>
+                            <td colspan="3"><input type="text" name="pessoa" id="pessoa" required style="width:600px;"></td>
+                        </tr>
+                    <tr>
+                            <td>
+                                <label for="comentario"><h3>Comentario: </h3></label></td>
+                            <td colspan="3"><input type="text" name="comentario" id="comentario" required style="width:600px;"></td>
+                    </tr>
+                    <tr><td colspan="2"></td>
+                        <td><input type="submit" value="Enviar" name="submit_res" style="width:150px"></td>
+                        <td><input type="reset" value="Limpar" style="width:150px;"></td>
                     <input type="hidden" id="fk" name="fk" value="<?php echo htmlspecialchars($rs->id_comentario); ?>">
-                    <input type=reset value=Limpar>
-                </form>
+                    </tr>
+                    </table></form>
+                </br>
+                <header></br></header>
                 <hr>
                 <?php
                 }
@@ -262,49 +264,26 @@ require 'init.php';?>
             echo "Erro: ".$erro->getMessage();
         }?>
         <!-- Botão que invoca modal de cadastro de comentario: -->
-        <a onclick="document.getElementById('id70').style.display='block'"><h2>Fazer comentario</h2></a> 
+        <h2><b>Fazer novo comentário</b></h2>
         
-        <!-- Formularios de comentario(ID70): -->
-        <div id="id70" class="modal"> 
-            <form action="" method="post" class="modal-content animate">
-                <div class="imgcontainer">
-                    <span onclick="document.getElementById('id70').style.display='none'" class="close" title="Close Modal">&times;</span>
-                </div>
-                <h2>Fazer comentario</h2>
-                <label for="pessoa"><b>Nome:</b></label><br>
-                <input type="text" placeholder="Digite o seu nome" name="pessoa" id="pessoa" required>   
-                <br><br>
-                <label for="comentario"><b>Comentario:</b></label><br>
-                <input type="text" placeholder="Digite o seu comentario" name="comentario" id="comentario" required>
-                <br><br>
-                <button type="submit" name="submit_cmt">Enviar</button>
-                <button type="reset">Limpar</button>
-                <button type="button" onclick="document.getElementById('id70').style.display='none'" class="cancelbtn">Cancelar</button>    
-            </form>
         </div>
         <br>
         <!-- formulario de Comentario padrão (Faz a mesma coisa que o de cima): -->
         <form action="" method="post">
-            <label for="pessoa">Nome: </label><br>
-            <input type="text" name="pessoa" id="pessoa" required>
-            <br><br>
-            <label for="comentario">Comentario: </label><br>
-            <input type="text" name="comentario" id="comentario" required>
-            <br><br>
-            <input type="submit" value="Enviar" name="submit_cmt">
-            <input type=reset value=Limpar>
+            <table>
+                <tr><td><label for="pessoa"><h3>Nome: </h3></label></td>
+                    <td colspan="3"><input type="text" name="pessoa" id="pessoa" required style="width:600px;"></td>
+            </tr>
+            <tr>
+                <td><h3><label for="comentario"><h3>Comentario: </h3></label></h3></td>
+            <td colspan="3"><input type="text" name="comentario" id="comentario" required style="width:600px;"></td>
+            </tr>
+            <tr><td colspan="2"></td>
+                <td><input type="submit" value="Enviar" name="submit_cmt" style="width:150px;"></td>
+                <td><input type="reset" value="Limpar" style="width:150px;"></td>
+            </tr>
+            </table>
         </form>
         <hr>
-        <script>
-            // Invoca modal:
-            var modal = document.getElementById('id70') || document.getElementById('id71');
-
-            // Quando clicar em qualquer lugar fora do modal; fecha:
-            window.onclick = function(event) {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            };
-        </script>
     </body>
 </html>
