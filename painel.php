@@ -28,15 +28,18 @@ require 'logincheck.php';
                 if ($stmt->execute()) {
                     while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {?>
                         <center>
+                            <img style="width:100px;heigth:50px;" src="upimgs/<?php echo $rs->foto_mantenedor;?>">
+                            <h3>E-mail: <?php echo $rs->email;?></h3></br>
+                            <h3>Telefone: <?php echo $rs->tel_mantenedor;?></h3></br>
                         <h2><span class="glyphicon glyphicon-pencil"></span>  Editar :</h2>
                         <h3>
-                            <a onclick="document.getElementById('id02').style.display='block'"><u>E-mail: <?php echo $rs->email;?></u></a><br> 
-                            <a onclick="document.getElementById('id03').style.display='block'"><u>Senha: ********</u></a><br>
+                            <a onclick="document.getElementById('id02').style.display='block'"><u>E-mail</u></a> |
+                            <a onclick="document.getElementById('id03').style.display='block'"><u>Senha</u></a> |
                         <?php if(maintainerch($_SESSION['id_usuario']) != true){?>
                             <p> Aguardando validação da conta.</p>
                         <?php } else { ?>
-                            <a onclick="document.getElementById('id04').style.display='block'"><u>Telefone: <?php echo $rs->tel_mantenedor;?></u></a><br>
-                            <a onclick="document.getElementById('id05').style.display='block'"><u>Foto: <img src="upimgs/<?php echo $rs->foto_mantenedor;?>"></u></a></br></br>
+                            <a onclick="document.getElementById('id04').style.display='block'"><u>Telefone</u></a> |
+                            <a onclick="document.getElementById('id05').style.display='block'"><u>Foto</u></a></br></br>
                         </h3>
                         </br><h2><a href="form-asilo.php"><span class="glyphicon glyphicon-plus"></span><u> Gerenciar asilo</u></a></h2></center>
                         <br>

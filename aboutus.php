@@ -17,6 +17,13 @@ require 'init.php';
         include 'navbar.php';?>
         <header><b>Quem Somos - VivAsilo</b></h1></center></header>
         <div>
+            <h3 style="background-color:white"> Somos estudantes de Análise e Desenvolvimento de Sistemas</br>
+                da Faculdade de Tecnologia de Praia Grande.</br> Com o conhecimento adquirido ao longo do curso,</br>
+                decidimos fazer um sistema para a divulgação dos </br>asilos e casas de repouso
+da nossa cidade (Praia Grande), para que a </br>população pudesse então voltar a sua atenção
+para o público mais velho</br> da cidade e também contribuir para um melhor conforto destes.</br>
+A visibilidade é muito importante, tendo em mente que 12,43% dos praia-grandenses</br> são idosos,
+ segundo dados do último senso IBGE (2010).</h3>
         <br><br>
         ANDREY PAES PINTO ANTUNES <-- Teve a ideia
         <br><br>

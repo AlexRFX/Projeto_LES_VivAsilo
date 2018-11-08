@@ -29,7 +29,6 @@ require 'init.php';
                     <div align="center"><p>Olá, <?php echo $_SESSION['nm_usuario']; ?></p></div>
                 <?php endif; ?>    
             <?php else: ?>
-                    <div align="center"><p>Olá, visitante</p></div>
             <?php endif; ?>
             <!-- Exibe dos os asilos já cadastrados com uma foto, uma breve descrição e uma opção “ver mais” -->        
     </b><header>Asilos em Praia Grande</header>
