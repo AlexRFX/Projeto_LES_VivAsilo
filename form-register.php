@@ -17,13 +17,13 @@
         <center><table>
         <form action="register.php" method="post">
             <tr><th colspan='3'><label for="nome">Nome: </label></th></tr>
-            <tr><td colspan='3' ><input type="text" name="nome" id="nome" required></td></tr>
+            <tr><td colspan='3' ><input type="text" name="nome" maxlength="40" id="nome" required></td></tr>
             <tr><td colspan='3'></br></td></tr>
             <tr><th colspan='3'><label for="email">E-mail: </label></th></tr>
             <tr><td colspan='3'><input type="email" name="email" id="email" required style="width:500px"></td></tr>
             <tr><td colspan='3'></br></td></tr>
             <tr><th colspan='3'><label for="senha">Senha: </label></th></tr>
-            <tr><td colspan='3' ><input type="password" name="senha" id="senha" required></td></tr>
+            <tr><td colspan='3' ><input type="password" name="senha" minlength="6" maxlength="12" placeholder="De 6 a 12 caracteres" id="senha" required></td></tr>
             <tr><td></br></td></tr>
             <tr><td></td>
                 <th><input type="submit" value="Cadastrar"></th>

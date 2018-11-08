@@ -35,7 +35,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Messagem de erro:
 if (count($users) <= 0){
     include 'navbar.php';
-    ?> <center><h2>Login ou senha incorretos</h2>
+    ?> <center><h2>Login e/ou senha incorretos</h2>
         <a href="form-login.php"><h3>Voltar para a pagina de login</h3></a>
     <?php exit;
 }

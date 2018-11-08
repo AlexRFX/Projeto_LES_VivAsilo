@@ -143,21 +143,21 @@ if($_SESSION['administrador'] != 0){
                             <td></td>
                         </tr>
                         <tr>
-                        <td colspan="2"><input type="text" name="nome" <?php
+                        <td colspan="2"><input type="text" name="nome" maxlength="30" pattern="[a-zA-Z0-9]+" <?php
                         // Preenche o nome no campo nome com um valor "value"
                         if (isset($nome) && $nome != null || $nome != ""){
                             echo "value=\"{$nome}\"";
                             }?> /></td>
                         <td style="width:20;"></td>
                         
-                        <td colspan="2"><input type="text" name="endereco" style="width:440;"<?php
+                        <td colspan="2"><input type="text" name="endereco" maxlength="50" style="width:440;"<?php
                         // Preenche o endereço no campo endereço com um valor "value"
                         if (isset($endereco) && $endereco != null || $endereco != ""){
                             echo "value=\"{$endereco}\"";
                             }?> /></td>
                         <td style="width:20;"></td>
                         
-                        <td colspan="2"><input type="text" name="cnpj" <?php
+                        <td colspan="2"><input type="number" name="cnpj" maxlength="14" minlength="14" style="width:460;" <?php
                         // Preenche o cnpj no campo cnpj com um valor "value"
                         if (isset($cnpj) && $cnpj != null || $cnpj != ""){
                             echo "value=\"{$cnpj}\"";

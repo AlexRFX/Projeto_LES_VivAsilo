@@ -240,12 +240,12 @@ require 'init.php';?>
                     <table>
                         <tr>
                             <td><label for="pessoa"><h3>Nome: </h3></label></td>
-                            <td colspan="3"><input type="text" name="pessoa" id="pessoa" required style="width:600px;"></td>
+                            <td colspan="3"><input type="text" name="pessoa" maxlength="30" id="pessoa" required style="width:600px;" pattern="[a-zA-Z0-9]+" required placeholder="Apenas caracteres alfanuméricos"></td>
                         </tr>
                     <tr>
                             <td>
                                 <label for="comentario"><h3>Comentario: </h3></label></td>
-                            <td colspan="3"><input type="text" name="comentario" id="comentario" required style="width:600px;"></td>
+                            <td colspan="3"><input type="text" name="comentario" maxlength="255" id="comentario" placeholder="Máximo de 255 caracteres" required style="width:600px;"></td>
                     </tr>
                     <tr><td colspan="2"></td>
                         <td><input type="submit" value="Enviar" name="submit_res" style="width:150px"></td>
@@ -272,11 +272,11 @@ require 'init.php';?>
         <form action="" method="post">
             <table>
                 <tr><td><label for="pessoa"><h3>Nome: </h3></label></td>
-                    <td colspan="3"><input type="text" name="pessoa" id="pessoa" required style="width:600px;"></td>
+                    <td colspan="3"><input type="text" name="pessoa" id="pessoa" maxlength="30" pattern="[a-zA-Z0-9]+" required placeholder="Apenas caracteres alfanuméricos" required style="width:600px;"></td>
             </tr>
             <tr>
                 <td><h3><label for="comentario"><h3>Comentario: </h3></label></h3></td>
-            <td colspan="3"><input type="text" name="comentario" id="comentario" required style="width:600px;"></td>
+            <td colspan="3"><input type="text" name="comentario" id="comentario" maxlength="255" placeholder="Máximo de 255 caracteres" required style="width:600px;"></td>
             </tr>
             <tr><td colspan="2"></td>
                 <td><input type="submit" value="Enviar" name="submit_cmt" style="width:150px;"></td>
