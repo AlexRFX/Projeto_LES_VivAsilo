@@ -55,7 +55,6 @@ require 'init.php';
                                 }?>
                         </table>
     </body>
- 
 </html>
 
 

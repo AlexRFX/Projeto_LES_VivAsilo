@@ -5,8 +5,11 @@
         <group>
             <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/admpainel.php</file>
             <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/painel.php</file>
+            <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/upload_imagem.php</file>
+            <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/imgupload.php</file>
             <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/asilo.php</file>
             <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/functions.php</file>
+            <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/login.php</file>
             <file>file:/C:/xampp/htdocs/Projeto_LES_VivAsilo/index.php</file>
         </group>
     </open-files>

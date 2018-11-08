@@ -40,7 +40,7 @@ require_once 'init.php';?>
 		$extensao = strtolower(end(explode('.', $_FILES['arquivo']['name'])));
                     if(array_search($extensao, $_UP['extensoes'])=== false){		
                         echo "
-                            <META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/form-asilo.php'>
+                            <META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/painel.php'>
                         <script type=\"text/javascript\">
                             alert(\"A imagem não foi cadastrada com extesão inválida.\");
                         </script>";
@@ -49,7 +49,7 @@ require_once 'init.php';?>
                     // Faz a verificação do tamanho do arquivo:
                     else if ($_UP['tamanho'] < $_FILES['arquivo']['size']){
                         echo "
-                            <META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/form-asilo.php'>
+                            <META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/painel.php'>
 			<script type=\"text/javascript\">
                             alert(\"Arquivo muito grande.\");
 			</script>";
@@ -69,17 +69,17 @@ require_once 'init.php';?>
 			if(move_uploaded_file($_FILES['arquivo']['tmp_name'], $_UP['pasta']. $nome_final)){
                             $pdo = db_connect();
                             // Upload efetuado com sucesso, exibe a mensagem:
-                            $stmt = $pdo->prepare("UPDATE tb_asilo SET foto_asilo = :linkimg WHERE fk_id = :id");
+                            $stmt = $pdo->prepare("UPDATE tb_mantenedor SET foto_mantenedor = :linkimg WHERE fk_id = :id");
                             $stmt->bindParam(':linkimg', $nome_final); $stmt->bindParam(':id', $_SESSION['id_usuario']); $stmt->execute();
                             echo "
-				<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/form-asilo.php'>
+				<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/painel.php'>
                             <script type=\"text/javascript\">
 				alert(\"Imagem cadastrada com Sucesso.\");
                             </script>";	
 				}else{
                                     // Upload não efetuado com sucesso, exibe a mensagem:
                                     echo "
-					<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/form-asilo.php'>
+					<META HTTP-EQUIV=REFRESH CONTENT = '0;URL=https://vivasilo.000webhostapp.com/painel.php'>
                                     <script type=\"text/javascript\">
                                             alert(\"Imagem não foi cadastrada com Sucesso.\");
                                     </script>";
