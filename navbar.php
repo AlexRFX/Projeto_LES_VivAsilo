@@ -67,7 +67,7 @@ require 'init.php';
     <?php include 'css/login.css'; ?></style>
 </style>
 </head>
-<body><center><img src="imgs/logo_vivasilo.png" alt="Projeto Logo" style="width:250px;heigth:85px;"></center>
+<body><center><img src="imgs/logo_vivasilo.png" alt="Projeto Logo" style="width:250px;heigth:85px;" ></center>
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header">

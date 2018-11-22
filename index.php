@@ -24,9 +24,9 @@ require 'init.php';
 
         <?php if (loggedin()):
                 if($_SESSION['administrador'] != 1):?>
-                    <div align="center"><p>Olá, <?php echo $_SESSION['nm_usuario']; ?></p></div>
+        <div style="text-align:right">Olá, <?php echo $_SESSION['nm_usuario']; ?><s style="color:#F7F8E0">oi</s></div>
                 <?php else: ?>
-                    <div align="center"><p>Olá, <?php echo $_SESSION['nm_usuario']; ?></p></div>
+        <div style="text-align:rigth">Olá, <?php echo $_SESSION['nm_usuario']; ?><s style="color:#F7F8E0">oi</s></div>
                 <?php endif; ?>    
             <?php else: ?>
             <?php endif; ?>

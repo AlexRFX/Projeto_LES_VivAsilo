@@ -220,7 +220,7 @@ if($_SESSION['administrador'] != 0){
                     </b><header>Meus Asilos:</header>
                     <table class="table" border="1" width="100%">
                         <tr>
-                            <th>Foto</th>
+                            <th><center>Foto</th>
                             <th>Nome</th>
                             <th>Breve Descrição</th>
                             <th>Ação</th>
@@ -233,7 +233,7 @@ if($_SESSION['administrador'] != 0){
                             if ($stmt->execute()) {
                                 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
                                     echo "<tr>";
-                                    echo "<td><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo
+                                    echo "<td><center><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo
                                     ."</td><td><center><a href=\"?act=upd&id=" . $rs->id_asilo. "\">[Alterar]</a>"
                                     ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                                     ."<a href=\"?act=del&id=" . $rs->id_asilo. "\">[Deletar]</a></center></td>";

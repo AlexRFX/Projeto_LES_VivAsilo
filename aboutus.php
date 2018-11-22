@@ -25,11 +25,7 @@ para o público mais velho</br> da cidade e também contribuir para um melhor co
 A visibilidade é muito importante, tendo em mente que 12,43% dos praia-grandenses</br> são idosos,
  segundo dados do último senso IBGE (2010).</h3>
         <br><br>
-        ANDREY PAES PINTO ANTUNES <-- Teve a ideia
-        <br><br>
-        JOÃO VICTOR SEBASTIAN MARQUES <-- Fez o banco e o Design
-        <br><br>
-        ALEXANDRE RESENDE FERREIRA <-- Fez o codigo
+       
         </div>
     </body>
 </html>

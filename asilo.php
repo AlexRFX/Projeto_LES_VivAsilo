@@ -2,9 +2,11 @@
 ---- É de extrema importancia pegar o arquivo SQL do banco de dados no host 000.webhost!
 -->
 <?php
-session_start();
+require 'init.php';
+if(loggedin()){
+session_start();}
 // inclui o arquivo de inicializão:
-require 'init.php';?>
+?>
 <!doctype html>
 <html>
     <head>

@@ -47,7 +47,7 @@ require 'logincheck.php';
                         </br>
                         <table class="table" border="1" width="100%">
                         <tr>
-                            <th>Foto</th>
+                            <th><center>Foto</th>
                             <th>Nome</th>
                             <th>Breve Descrição</th>
                             <th>Ação</th>
@@ -60,8 +60,8 @@ require 'logincheck.php';
                             if ($stmt->execute()) {
                                 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
                                     echo "<tr>";
-                                    echo "<td><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo
-                                    ."</td><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ler Mais]</u></a></td></tr>";
+                                    echo "<td><center><img src=".$rs->foto_asilo."></td><td>".$rs->nome_asilo."</td><td>".$rs->desc_asilo
+                                    ."</td><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ler Mais]</u></a></td></tr></center>";
                                 }
                             } else {
                                 echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
