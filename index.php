@@ -21,7 +21,6 @@ require 'init.php';
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-
         <?php if (loggedin()):
                 if($_SESSION['administrador'] != 1):?>
         <div style="text-align:right">Olá, <?php echo $_SESSION['nm_usuario']; ?><s style="color:#F7F8E0">oi</s></div>
