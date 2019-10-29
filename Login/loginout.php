@@ -10,4 +10,4 @@ session_destroy();
 //unset($_SESSION['login']);
 
 // Retorna para a index.php:
-header('Location: index.php');
+header('Location: ../index.php');

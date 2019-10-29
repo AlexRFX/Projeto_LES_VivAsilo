@@ -1,13 +1,13 @@
 <?php
 session_start();
 // inclui o arquivo de inicialização:
-require 'init.php';
+require '../init.php';
 // Resgata variáveis do formulário do painel.php:
-$telefone = isset($_POST['telefone']) ? $_POST['telefone'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
 
 // Caso falte algum parametro:
-if ((empty($telefone))){
-    echo "Digite o seu número de telefone";
+if ((empty($email))){
+    echo "Digite o seu novo e-mail";
     //header("Refresh:5; painel.php");?>
     </br></br><a href="painel.php">Voltar para o painel</a>
     <?php exit;
@@ -16,8 +16,8 @@ if ((empty($telefone))){
 // Chama a função da conexão PDO::
 try {
     $pdo = db_connect();
-    $stmt = $pdo->prepare('UPDATE tb_mantenedor SET tel_mantenedor = :telefone WHERE fk_id = :id') OR die("Error:".mysql_error());
-    $stmt->execute(array(':id' => $_SESSION['id_usuario'], ':telefone' => $telefone));
+    $stmt = $pdo->prepare('UPDATE tb_user SET user_email = :email WHERE user_id = :id') OR die("Error:".mysql_error());
+    $stmt->execute(array(':id' => $_SESSION['user_id'], ':email' => $email));
 
     //echo $stmt->rowCount(); 
 }catch(PDOException $e){

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$pagina = "aboutus";
 // inclui o arquivo de inicializão:
 require 'init.php';
 ?>
@@ -15,9 +16,9 @@ require 'init.php';
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <header><b>Quem Somos - VivAsilo</b></h1></center></header>
+        <p class="nome">Quem Somos</p>
         <div>
-            <h3 style="background-color:white"> Somos estudantes de Análise e Desenvolvimento de Sistemas</br>
+            <h3 class="fonte1" style="line-height:2;"> Estudantes de Análise e Desenvolvimento de Sistemas</br>
                 da Faculdade de Tecnologia de Praia Grande.</br> Com o conhecimento adquirido ao longo do curso,</br>
                 decidimos fazer um sistema para a divulgação dos </br>asilos e casas de repouso
 da nossa cidade (Praia Grande), para que a </br>população pudesse então voltar a sua atenção

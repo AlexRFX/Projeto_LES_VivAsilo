@@ -1,5 +1,6 @@
 <?php
 session_start();
+$pagina = "index";
 // inclui o arquivo de inicializão:
 require 'init.php';
 ?>
@@ -10,49 +11,54 @@ require 'init.php';
 
         <title>Home - VivAsilo</title>
         <style>
-            td,tr,th{
-                text-align: center;
-            }
-            
+            .bord{
+                border-style:solid;
+                border-width:5px;
+                border-color: #b3ffd9;
+            }  
+
         </style>
     </head>
 
     <body>
-        <?php 
+        <?php
         // Include da NavBar
-        include 'navbar.php';?>
-        <?php if (loggedin()):
-                if($_SESSION['administrador'] != 1):?>
-        <div style="text-align:right">Olá, <?php echo $_SESSION['nm_usuario']; ?><s style="color:#F7F8E0">oi</s></div>
-                <?php else: ?>
-        <div style="text-align:rigth">Olá, <?php echo $_SESSION['nm_usuario']; ?><s style="color:#F7F8E0">oi</s></div>
-                <?php endif; ?>    
-            <?php else: ?>
-            <?php endif; ?>
-            <!-- Exibe dos os asilos já cadastrados com uma foto, uma breve descrição e uma opção “ver mais” -->        
-    </b><header>Asilos em Praia Grande</header>
-    </br>
-    </br>
-                    <center><table class="table" align="left" width="100%">
-                        <?php try {
-                        // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
-                        $pdo = db_connect();
-                        $stmt = $pdo->prepare("SELECT id_asilo, nome_asilo, desc_asilo, foto_asilo FROM tb_asilo");
- 
-                        if ($stmt->execute()) {
-                            while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
-                                echo "<tr>";
-                                ?>
-                                <td rowspan="3" align="center">    <?php
-                                echo "<img src=".$rs->foto_asilo."></td><td><h3><b>".$rs->nome_asilo."</b></h3></td></tr><tr><td><h3>Descrição do asilo:</b></h3></br>".$rs->desc_asilo
-                                ."</td></tr><tr><td><a href=\"asilo.php?id=" . $rs->id_asilo. "\"><u>[Ver Mais]</u></a></td></tr></tr><tr></tr>";
-                                }} else {
-                                    echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
-                                }} catch (PDOException $erro) {
-                                    echo "Erro: ".$erro->getMessage();
-                                }?>
-                        </table>
+        include 'navbar.php';
+        ?>
+        <!-- Exibe dos os asilos já cadastrados com uma foto, uma breve descrição e uma opção “ver mais” -->        
+        <p class="nome"></p>
+        <div class="container">
+            <?php
+            try {
+                // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
+                $pdo = db_connect();
+                $stmt = $pdo->prepare("SELECT asilo_id, asilo_nm, asilo_ds, asilo_foto FROM tb_asilo");
+
+                if ($stmt->execute()) {
+                    while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+                        ?>
+                        <div class ="row verd bord">
+                            <h1 class="fonte2"><?= strtoupper($rs->asilo_nm) ?></h1>
+                            <div class="col-sm-7 col-1">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        </br>
+                                        <?php echo "<img src=imgs/imgsasilo/" . $rs->asilo_foto . ">" ?>
+                                        </br>
+                                        </br>
+                                    </div></div></div><div class="col-sm-5 col-2">
+                                <h3 class="fonte2"><?= $rs->asilo_ds ?></h3>
+                        <?php echo "</h3><a href=\"Asilo/asilo.php?id=" . $rs->asilo_id . "\"><h4>[Ver Mais]</a></h4>"; ?>
+                            </div></div></br>
+                        <?php
+                    }
+                } else {
+                    echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
+                }
+            } catch (PDOException $erro) {
+                echo "Erro: " . $erro->getMessage();
+            }
+            ?>
+        </div>
     </body>
 </html>
-
-

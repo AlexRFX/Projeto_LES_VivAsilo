@@ -1,5 +1,6 @@
 <?php
 session_start();
+$pagina = "contactus";
 // inclui o arquivo de inicializão:
 require 'init.php';
 ?>
@@ -15,10 +16,10 @@ require 'init.php';
         <?php 
         // Include da NavBar
         include 'navbar.php';?>
-        <header><b>Fale Conosco - VivAsilo</b></h1></center></header>
-<center><h3>Envie dúvidas ou sugestões para:</h3>
+        <p class="nome">Fale Conosco</p>
+    <center><h3 class="fonte2">Envie dúvidas ou sugestões para:</h3>
 <div>
-    E-mail: vivasilo@hotmail.com
+    vivasilo@hotmail.com
     
 </div>
     </body>

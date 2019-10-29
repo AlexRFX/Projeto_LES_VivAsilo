@@ -1,6 +1,7 @@
 <?php
 // inclui o arquivo de inicialização:
 require 'init.php';
+$pagina
 ?>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +13,6 @@ require 'init.php';
     .navbar {
         margin-bottom: 0;
         border-radius: 0;
-        background-color: #F7F8E0;
     }
     
     /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -20,7 +20,7 @@ require 'init.php';
     
     .contentDX4 {
             padding-top: 20px;
-            background-color: #F3E2A9;
+            background-color: #F7F8E0;
             height: 100%;
         }
     
@@ -37,7 +37,6 @@ require 'init.php';
         padding: 15px;
     }
     body{
-        background-color:#F7F8E0;
     }
     th{
 	font-size:14pt;
@@ -54,21 +53,62 @@ require 'init.php';
     text-align:center;
     font-size:15pt;
     }
-    header{
+    .nome{
+        font-family: verdana;
         font-size:25pt;
-        background-color:#F3E2A9;
+        background-color:#b3ffd9;
         text-align: center;
+        height: 50px;
+        
     }
     a { color: inherit; }
-    img{
-        width:450px;
-        lidth:200px;      
-    }
+    
+    .fonte1{
+                font-family: avantgarde;
+            }
+    .fonte2{
+                font-family: verdana;
+            }
+                    
+    .fonte3{
+                font-family: times, serif;
+            }
+    .verd{
+                background-color: #e6fff2;
+            }
+    .comens{
+                word-wrap: break-word; 
+                border-style:solid;
+                border-width: 5px;
+                border-color: #b3ffd9;
+            }
+            bg-warning{
+                text-align: center;
+            }
+            bg-success{
+                text-align: center;
+            }
+            bg-danger{
+                text-align: center;
+            }
+    div.col-1 img
+            {
+                width: 90%;
+            }
+            .cen{
+                text-align: center;
+            }
+    
     <?php include 'css/login.css'; ?></style>
 </style>
 </head>
-<body><center><img src="imgs/logo_vivasilo.png" alt="Projeto Logo" style="width:250px;heigth:85px;" ></center>
-<nav class="navbar">
+<body>
+    <?php if($pagina == "index" || $pagina == "contactus" || $pagina == "aboutus"):?>
+        <div class="container-fluid" style="background-color:#b3ffd9"><center><img src="imgs/logo_vivasilo.png" alt="Projeto Logo" style="width:250px;" ></center></div>
+    <?php else: ?>
+        <div class="container-fluid" style="background-color:#b3ffd9"><center><img src="../imgs/logo_vivasilo.png" alt="Projeto Logo" style="width:250px;" ></center></div>
+    <?php endif; ?>
+    <nav class="navbar-default navbar-static-top">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -76,32 +116,59 @@ require 'init.php';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>                        
             </button>
-        <a class="navbar-brand" href="index.php">Página principal</a>
+            <?php
+            if($pagina == "index" || $pagina == "contactus" || $pagina == "aboutus"):?>
+                <a class="navbar-brand fonte2" style="font-size:20px;"href="index.php">Página principal</a>
+            <?php else: ?>
+                <a class="navbar-brand fonte2" style="font-size:20px;"href="../index.php">Página principal</a>
+            <?php endif ?>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-            <li><a href="aboutus.php">Quem somos</a></li>
-            <li><a href="contactus.php">Fale conosco</a></li>
+            <?php
+            if($pagina == "index" || $pagina == "contactus" || $pagina == "aboutus"):?>
+                <li><a href="aboutus.php" class="fonte2" style="font-size:20px;">Quem somos</a></li>
+                <li><a href="contactus.php" class="fonte2" style="font-size:20px;">Fale conosco</a></li>
+            <?php else: ?>
+                <li><a href="../aboutus.php" class="fonte2" style="font-size:20px;">Quem somos</a></li>
+                <li><a href="../contactus.php" class="fonte2" style="font-size:20px;">Fale conosco</a></li>
+            <?php endif ?>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <?php if (loggedin()):
-                if($_SESSION['administrador'] != 1):?>
-                    <li><a href="painel.php"> Meu painel</a></li>
-                    <li><a href="loginout.php"><span class="glyphicon glyphicon-log-out"></span> Sair </a></li>
-                <?php else: ?>
-                    <li><a href="admpainel.php"> Painel </a></li>
-                    <li><a href="solicitations.php">Solicitações (<?php echo requestcount(); ?>)</a></li>
-                    <li><a href="loginout.php"><span class="glyphicon glyphicon-log-out"></span> Sair </a></li>
-                <?php endif; ?>    
-            <?php else: ?>
-                    <li><a href="form-register.php">Cadastrar-se</a></li>
-                <li><a href="form-login.php" style="width:auto;"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                if($_SESSION['user_adm'] != 1):
+                    if($pagina == "index" || $pagina == "contactus" || $pagina == "aboutus"):?>
+                        <li><a href="Painel/painel.php" class="fonte2" style="font-size:20px;"> Meu painel</a></li>
+                        <li><a href="Login/loginout.php" class="fonte2" style="font-size:20px;"><span class="glyphicon glyphicon-log-out"></span> Sair </a></li>
+                    <?php else: ?>
+                        <li><a href="../Painel/painel.php" class="fonte2" style="font-size:20px;"> Meu painel</a></li>
+                        <li><a href="../Login/loginout.php" class="fonte2" style="font-size:20px;"><span class="glyphicon glyphicon-log-out"></span> Sair </a></li>
+                    <?php endif; ?>
+                <?php else:
+                    if($pagina == "index" || $pagina == "contactus" || $pagina == "aboutus"):?>
+                        <li><a href="Painel/admpainel_user.php" class="fonte2" style="font-size:20px;"> ADM Painel </a></li>
+                        <li><a href="Painel/solicitations.php" class="fonte2">Solicitações (<?php echo requestcount(); ?>)</a></li>
+                        <li><a href="Login/loginout.php" class="fonte2" style="font-size:20px;"><span class="glyphicon glyphicon-log-out"></span> Sair </a></li>
+                    <?php else: ?>
+                        <li><a href="../Painel/admpainel_user.php" class="fonte2" style="font-size:20px;"> ADM Painel </a></li>
+                        <li><a href="../Painel/solicitations.php" class="fonte2">Solicitações (<?php echo requestcount(); ?>)</a></li>
+                        <li><a href="../Login/loginout.php" class="fonte2" style="font-size:20px;"><span class="glyphicon glyphicon-log-out"></span> Sair </a></li>
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php else: 
+                if($pagina == "index" || $pagina == "contactus" || $pagina == "aboutus"):?>                    
+                    <li><a href="Registrar/form-register.php" class="fonte2" style="font-size:20px;">Cadastrar-se</a></li>
+                    <li><a href="Login/form-login.php" style="width:auto;" class="fonte2" style="font-size:20px;"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <?php elseif($pagina != "form-register"):?>
+                    <li><a href="../Registrar/form-register.php" class="fonte2" style="font-size:20px;">Cadastrar-se</a></li>
+                <?php elseif($pagina != "form-login"):?>
+                    <li><a href="../Login/form-login.php" style="width:auto;" class="fonte2" style="font-size:20px;"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <?php endif ?>
             <?php endif; ?>
         </ul>
     </div>
     </div>
 </nav>
-
 <script>
 // Get the modal
 var modal = document.getElementById('id01');

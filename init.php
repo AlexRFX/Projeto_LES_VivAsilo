@@ -20,6 +20,10 @@ define( 'BD_SERVIDOR', 'localhost' );
 define( 'BD_USUARIO', 'root' );
 define( 'BD_SENHA', '' );
 define( 'BD_NOME', 'dbvivasilo' );
+
+/* Constantes de configuração */  
+define('QTDE_REGISTROS', 5);   
+define('RANGE_PAGINAS', 10);
  
 /* Conexão SMTP:
 define( 'SMTP_SERVIDOR', 'mail.servidor.com.br' );

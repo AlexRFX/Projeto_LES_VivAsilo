@@ -1,7 +1,7 @@
 <?php
 session_start();
 // inclui o arquivo de inicialização:
-require 'init.php';
+require '../init.php';
 // Resgata variáveis do formulário do painel.php:
 $senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 $novasenhaHash = isset($_POST['novasenha']) ? $_POST['novasenha'] : '';
@@ -30,8 +30,8 @@ if ($novasenhaHash != $confsenhaHash){
 // Chama a função da conexão PDO::
 try {
     $pdo = db_connect();
-    $stmt = $pdo->prepare('UPDATE tb_usuario SET senha = :novasenha WHERE id_usuario = :id AND senha = :senha') OR die("Error:".mysql_error());
-    $stmt->execute(array(':id' => $_SESSION['id_usuario'], ':senha' => $senhaHash, ':novasenha' => $novasenhaHash));
+    $stmt = $pdo->prepare('UPDATE tb_user SET user_senha = :novasenha WHERE user_id = :id AND user_senha = :senha') OR die("Error:".mysql_error());
+    $stmt->execute(array(':id' => $_SESSION['user_id'], ':senha' => $senhaHash, ':novasenha' => $novasenhaHash));
 
     //echo $stmt->rowCount(); 
 }catch(PDOException $e){
