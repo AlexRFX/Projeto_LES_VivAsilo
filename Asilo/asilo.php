@@ -61,7 +61,7 @@ require '../init.php';
                         if($nota != NULL) {
                             $stmt3 = $pdo->prepare("SELECT asilo_nota, asilo_count FROM tb_asilo WHERE asilo_id = $id");
                             if ($stmt3->execute()) {
-                                $asilonotacout = $stmt3->fetch(PDO::FETCH_OBJ);
+                                $asilonotacount = $stmt3->fetch(PDO::FETCH_OBJ);
                                 $nota = $nota + $asilonotacount->asilo_nota;
                                 $count = 1 + $asilonotacount->asilo_count;
                                 $stmt5 = $pdo->prepare("UPDATE tb_asilo SET asilo_nota = $nota, asilo_count = $count WHERE asilo_id = $id");
@@ -159,8 +159,12 @@ require '../init.php';
                 <div class="col-sm-5 col-1" style="text-align:center;">
                     <br>
                     <?php
-                echo "<img src=../imgs/imgsasilo/".$rs->asilo_foto.">";?>
+                echo "<img src=../imgs/imgsasilo/".$rs->asilo_foto.">";
+                if($rs->asilo_count == null):?>
+                    <p class="fonte1 b">Nota:</p><p>Ainda não tem avaliações dos usuarios</p>
+                <?php else: ?>
                     <p class="fonte1 b">Nota:</p><p class="m"><?=$rs->asilo_nota/$rs->asilo_count;?></p>
+                <?php endif; ?>
                 </div>
                 <div class="col-sm-6">
                     <div class="row">
@@ -219,7 +223,7 @@ require '../init.php';
         <div class="row">
             <p class="nome" style="text-align:center;">Realizar comentário </p>
             <?php if (!LoggedIn()) {?>
-                <h4 class="bg-warning"> Precisa logar para poder fazer comentario!</h4>
+                <h4 class="bg-warning"> É nescessário efetuar o login para poder fazer comentario!</h4>
             <?php } elseif ((LoggedIn() == true) && (usercomentcheck($_GET['id'], $_SESSION['user_id']) == true)){ ?>
                 <h4 class="bg-warning"> Você já fez um comentario com nota para neste asilo!</h4>
             <?php } elseif ((LoggedIn() == true) && (maintaincheck($_SESSION['user_id'], $_GET['id']) == false)){ ?>
@@ -331,7 +335,7 @@ require '../init.php';
                         }?>
                 <h3 class="fonte1" style="text-align:center;"><b>Responder comentário: </b></h3>
                 <?php if (!LoggedIn()) {?>
-                    <h4 class="bg-warning"> Precisa logar para poder responder comentarios!</h4>
+                    <h4 class="bg-warning"> É nescessário efetuar o login para poder responder comentarios!</h4>
                 <?php } else {?>
                     <!-- formulario de Resposta de Comentario padrão (funciona): -->
                     <form action="" method="post" style="text-align:left;">

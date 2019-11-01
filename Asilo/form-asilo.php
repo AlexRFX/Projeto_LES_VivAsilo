@@ -66,7 +66,7 @@ if($_SESSION['user_adm'] != 0){
                         $stmt->bindParam(11, $id);
                     } else {
                         $stmt = $pdo->prepare("INSERT INTO tb_asilo (`asilo_nm`, `asilo_endereco`, `asilo_cnpj`, `asilo_telefone`, `asilo_cidade_fk`, `asilo_ds`, `asilo_necessidade`, `asilo_mensalidade`, `asilo_tipo_fk`, `asilo_siteurl`, `asilo_mantenedor_fk`, `asilo_status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
-                        $stmt->bindParam(10, $_SESSION['user_id']);
+                        $stmt->bindParam(11, $_SESSION['user_id']);
                     }
                     $stmt->bindParam(1, $nome);
                     $stmt->bindParam(2, $endereco);
@@ -158,7 +158,7 @@ if($_SESSION['user_adm'] != 0){
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="nome"><h4>Nome:</h4></label><br>
-                                <input type="text" name="nome" maxlength="30" pattern="[a-zA-Z0-9]+" style="width:60%;" class="form-control input-lg" <?php
+                                <input type="text" name="nome" maxlength="30" style="width:60%;" class="form-control input-lg" <?php
                                 // Preenche o nome no campo nome com um valor "value"
                                 if (isset($nome) && $nome != null || $nome != ""){
                                     echo "value=\"{$nome}\"";

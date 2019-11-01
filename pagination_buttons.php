@@ -1,11 +1,11 @@
 <div>
     <?php if ($pagina_atual != $pagina_anterior): ?>
         <div class="btn btn-default btn-lg">
-            <a class='glyphicon glyphicon-arrow-left' href="admpainel_user.php?page=<?= $primeira_pagina ?>" title="Primeira Página"></a>
+            <a class='glyphicon glyphicon-arrow-left' href="<?=$pagina;?>.php?page=<?= $primeira_pagina ?>" title="Primeira Página"></a>
         </div>
         <b> \ </b>
         <div class="btn btn-default btn-lg">
-            <a class='glyphicon glyphicon-chevron-left' href="admpainel_user.php?page=<?= $pagina_anterior ?>" title="Página Anterior"></a>     
+            <a class='glyphicon glyphicon-chevron-left' href="<?=$pagina;?>.php?page=<?= $pagina_anterior ?>" title="Página Anterior"></a>     
         </div>
     <?php else: ?>  
         <div class="btn btn-default btn-lg" disabled="disabled">
@@ -23,22 +23,22 @@
         if ($i == $pagina_atual):
             ?>
             <div class="btn btn-default btn-lg active">
-                <a href="admpainel_user.php?page=<?= $i ?>"><b><?= $i ?></b></a>
+                <a href="<?=$pagina;?>.php?page=<?= $i ?>"><b><?= $i ?></b></a>
             </div>
     <?php else: ?>
             <div class="btn btn-default btn-lg">
-                <a href="admpainel_user.php?page=<?= $i ?>"><i><?= $i ?></i></a>
+                <a href="<?=$pagina;?>.php?page=<?= $i ?>"><i><?= $i ?></i></a>
             </div>
         <?php endif; ?>
     <?php endfor; ?>
     <b> | </b>
     <?php if ($pagina_atual != $proxima_pagina): ?>
         <div class="btn btn-default btn-lg">
-            <a class='glyphicon glyphicon-chevron-right' href="admpainel_user.php?page=<?= $proxima_pagina ?>" title="Próxima Página"></a>
+            <a class='glyphicon glyphicon-chevron-right' href="<?=$pagina;?>.php?page=<?= $proxima_pagina ?>" title="Próxima Página"></a>
         </div>
         <b> / </b>
         <div class="btn btn-default btn-lg">
-            <a class='glyphicon glyphicon-arrow-right' href="admpainel_user.php?page=<?= $ultima_pagina ?>" title="Última Página"></a>
+            <a class='glyphicon glyphicon-arrow-right' href="<?=$pagina;?>.php?page=<?= $ultima_pagina ?>" title="Última Página"></a>
         </div>
     <?php else: ?>
         <div class="btn btn-default btn-lg" disabled="disabled">

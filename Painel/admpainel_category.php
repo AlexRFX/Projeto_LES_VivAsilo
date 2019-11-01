@@ -232,14 +232,17 @@ if($_SESSION['user_adm'] != 1){
                                     // Variaveis, e funções de controle da paginação
                                     require '../pagination.php';
  
-                                    foreach($dados as $rs):
-                                            echo "<tr>";
-                                            echo "<td>".$rs->tipo_nm."</td><td>".$rs->tipo_ds
-                                            ."</td><td><center><a href=\"?act=upd&id=" . $rs->tipo_id. "\">[Alterar]</a>"
-                                            ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                                            ."<a href=\"?act=del&id=" . $rs->tipo_id. "\">[Deletar]</a></center></td>";
-                                            echo "</tr>";
-                                    endforeach; ?>
+                                    foreach($dados as $rs): ?>
+                                            <tr><?php
+                                            echo "<td>".$rs->tipo_nm."</td><td>".$rs->tipo_ds."</td>"?>
+                                            <td>
+                                                <center>
+                                                    <a href=?act=upd&id=<?=$rs->tipo_id;?>><button type="button" class="btn btn-outline-secondary">[Alterar]</button></a>
+                                                    <a href=?act=del&id=<?=$rs->tipo_id?>><button type="button" class="btn btn-outline-warning">[Deletar]</button></a>
+                                                </center></br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </td>
+                                    <?php endforeach; ?>
                             </table>
                             <?php
                             // Botões da paginação

@@ -41,7 +41,7 @@ if($_SESSION['user_adm'] != 1){
         if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "acc" && $id != ""){
             $pdo = db_connect();
             try {
-                $stmt = $pdo->prepare("INSERT INTO tb_mantenedor (`mantenedor_fk`, `mantenedor_telefone`, `mantenedor_foto`) VALUES (?, null, null)");
+                $stmt = $pdo->prepare("INSERT INTO tb_mantenedor (`mantenedor_fk`, `mantenedor_telefone`) VALUES (?, null)");
                 $stmt->bindParam(1, $id, PDO::PARAM_INT);
                 if ($stmt->execute()) {
                     if ($stmt->rowCount() > 0) {?>

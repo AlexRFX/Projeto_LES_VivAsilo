@@ -103,7 +103,7 @@ if($_SESSION['user_adm'] != 1){
                             //$stmt = $pdo->prepare("DELETE FROM tb_usuario WHERE id_usuario = ?");
                             //$stmt->bindParam(1, $id, PDO::PARAM_INT);
                             if ($stmt->execute()) {?>
-                                <h4 class="bg-success">Usuario deletado com sucesso!</h4>
+                                <center><h4 class="bg-success"><b>Usuario deletado com sucesso!</b></h4></center>
                                 <?php $id = null;
                             } else {
                                 throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
@@ -253,14 +253,22 @@ if($_SESSION['user_adm'] != 1){
                             // Variaveis, e funções de controle da paginação
                             require '../pagination.php';
                                   
-                            foreach($dados as $rs): 
-                                echo "<tr>";
-                                echo "<td>".$rs->user_nm."</td><td>".$rs->user_email."</td><td>".$rs->mantenedor_telefone."</td><td>".$rs->mantenedor_foto
-                                ."</td><td><center><a href=\"?act=upd&id=" . $rs->user_id. "\">[Alterar]</a>"
-                                ."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-                                ."<a href=\"?act=del&id=" . $rs->user_id. "\">[Deletar]</a></center></td>";
-                                echo "</tr>";
-                            endforeach; ?>
+                            foreach($dados as $rs): ?>
+                                <tr>
+                                <?php echo "<td>".$rs->user_nm."</td><td>".$rs->user_email."</td><td>".$rs->mantenedor_telefone."</td>"?>
+                                <td><img style="width:25%" src="../imgs/imgsuser/<?php echo $rs->mantenedor_foto; ?>"</img></td>
+                                
+                                <td>
+                                    <center>
+                                        <a href=?act=upd&id=<?=$rs->user_id;?>><button type="button" class="btn btn-outline-secondary">[Alterar]</button></a>
+                                        
+                                        <a href=?act=del&id=<?=$rs->user_id?>><button type="button" class="btn btn-outline-warning">[Deletar]</button></a>
+                                    </center>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </td>
+                                </tr>
+                                
+                            <?php endforeach; ?>
                         </table>
                         <?php
                         // Botões da paginação

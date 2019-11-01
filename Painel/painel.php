@@ -43,8 +43,7 @@ require '../logincheck.php';
                                     <div class="col-sm-5">
                                         </br>
                                         <div class="col-sm-12">
-                                            <img style="width:50%" src="../imgs/imgsuser/<?php echo $rs->mantenedor_foto; ?>"></br>
-                                            <a onclick="document.getElementById('id05').style.display = 'block'">[Editar]</a></br></br></br>
+                                            <a onclick="document.getElementById('id05').style.display = 'block'"><img style="width:50%" src="../imgs/imgsuser/<?php echo $rs->mantenedor_foto; ?>"</img><br>[Editar]</a></br></br></br>
                                         </div>
                                     </div>
                                     <div class="col-sm-7 font2" style="text-align:left;">
@@ -83,8 +82,10 @@ require '../logincheck.php';
                                             $stmt->execute(array(':id' => $_SESSION['user_id']));
                                             if ($stmt->execute()) {
                                                 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) { ?>
-                                                    </br><div class="col-sm-6 col-1">
-                                                    <?php echo "<img src=../imgs/imgsasilo/" . $rs->asilo_foto . ">" ?><a onclick="document.getElementById('id06').style.display = 'block'">[Mudar foto]</a></div>
+                                                    </br>
+                                                    <div class="col-sm-6 col-1">
+                                                        <a onclick="document.getElementById('id06').style.display = 'block'"><img src="../imgs/imgsasilo/<?php echo $rs->asilo_foto; ?>"</img><br>[Click para trocar foto]</a>
+                                                    </div>
                                                     <div class="col-sm-6">
                                                         <h2 class="fonte1"><?= $rs->asilo_nm ?></h2><p></br><?= $rs->asilo_ds ?></p>
                                                         <p><?php
@@ -188,8 +189,9 @@ require '../logincheck.php';
                 <p class="nome">Editar Foto</p>
                 <div class="row">
                     <div class="col-sm-12"></div>
-                        <label for="ds" class="fonte2">Tamanho recomendado: 200X220:</label></br>
-                        <label for="ds" class="fonte2">Formato recomendado: .jpg</label></br>
+                        </br><label for="ds" class="fonte2">Recomendado:</label></br>
+                        <label for="ds" class="fonte2">Tamanho: 200X220</label></br>
+                        <label for="ds" class="fonte2">Formato: .jpg</label></br>
                         <div class="col-sm-12">
                             <center>
                                 <input name="arquivo" type="file" class="" style="width:90%" required>
@@ -212,8 +214,9 @@ require '../logincheck.php';
                 <p class="nome">Mudar foto do asilo</p>
                 <div class="row">
                     <div class="col-sm-12"></div>
-                        <label for="ds" class="fonte2">Tamanho recomendado: 640X480:</label></br>
-                        <label for="ds" class="fonte2">Formato recomendado: .jpg</label></br>
+                        </br><label for="ds" class="fonte2">Recomendado:</label></br>
+                        <label for="ds" class="fonte2">Tamanho: 640X480</label></br>
+                        <label for="ds" class="fonte2">Formato: .jpg</label></br>
                         <div class="col-sm-12">
                             <center>
                                 <input name="arquivo" type="file" class="" style="width:90%" required>
