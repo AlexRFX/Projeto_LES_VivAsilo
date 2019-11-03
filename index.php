@@ -31,17 +31,15 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
         // Verificar se foi enviando dados via POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nome = (isset($_POST["nome"]) && $_POST["nome"] != null) ? $_POST["nome"] : "";
-            $endereco = (isset($_POST["endereco"]) && $_POST["endereco"] != null) ? $_POST["endereco"] : "";
-            $cidade = (isset($_POST["cidade"]) && $_POST["cidade"] != null) ? $_POST["cidade"] : "";
+            $cidade = (isset($_POST["cidade"]) && $_POST["cidade"] != null) ? $_POST["cidade"] : "*";
             $mensal = (isset($_POST["mensal"]) && $_POST["mensal"] != null) ? $_POST["mensal"] : "";
-            $categoria = (isset($_POST["categoria"]) && $_POST["categoria"] != null) ? $_POST["categoria"] : "";
+            $categoria = (isset($_POST["categoria"]) && $_POST["categoria"] != null) ? $_POST["categoria"] : "*";
             $_SESSION['nome'] = $nome;
             $_SESSION['cidade'] = $cidade;
             $_SESSION['categoria'] = $categoria;
             
             } else {
                 $nome = (isset($_SESSION['nome']) && $_SESSION['nome'] != null) ? $_SESSION['nome'] : "";
-                $endereco = NULL;
                 $cidade = (isset($_SESSION['cidade']) && $_SESSION['cidade'] != null) ? $_SESSION['cidade'] : "*";
                 $mensal = NULL;
                 $categoria = (isset($_SESSION['categoria']) && $_SESSION['categoria'] != null) ? $_SESSION['categoria'] : "*";
@@ -75,19 +73,23 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
                                         $stmt1->execute();
                                         if ($stmt1->execute()) { ?>
                                             <select name="categoria">
+                                                <?php if($categoria != '*'): ?>
+                                                    <option value="<?=$categoria;?>"><?=optionname($optiontype = 'categoria', $categoria);?></option>
                                                     <option value="*">Todas</option>
-                                                <?php while ($rs1 = $stmt1->fetch(PDO::FETCH_OBJ)) {?>
-                                                    <option value="<?=$rs1->tipo_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs1->tipo_nm?></option>
-                                                    <?php
-                                                    // Preenche a conta bancaria no campo conta bancaria com um valor "value"
-                                                    if (isset($categoria) && $categoria != null || $categoria != ""){
-                                                        echo "value=\"{$categoria}\"";
-                                                    }
-                                                }} else {
-                                                    echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
-                                                }} catch (PDOException $erro) {
-                                                    echo "Erro: ".$erro->getMessage();
-                                                }?>
+                                                <?php else: ?>
+                                                    <option value="*">Todas</option>
+                                                <?php endif;
+                                                while ($rs1 = $stmt1->fetch(PDO::FETCH_OBJ)) {
+                                                    if($rs1->tipo_id != $categoria): ?>
+                                                        <option value="<?=$rs1->tipo_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs1->tipo_nm?></option>
+                                                    <?php endif;
+                                                }
+                                        } else {
+                                            echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
+                                        }
+                                    } catch (PDOException $erro) {
+                                        echo "Erro: ".$erro->getMessage();
+                                    }?>
                                             </select>
                                     <label for="cidade"><h4>Cidade:</h4></label>
                                     <?php try {
@@ -97,20 +99,23 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
                                         $stmt2->execute();
                                         if ($stmt2->execute()) { ?>
                                             <select name="cidade">
-                                                <?php
-                                                /* Preenche a conta bancaria no campo conta bancaria com um valor "value"
-                                                if (isset($cidade) && $cidade != null || $cidade != ""){?>
-                                                    <option value="<?=$cidade;?>"</option>
-                                                <?php } */?>
-                                                <option value="*">Todas</option>
-                                                <?php while ($rs2 = $stmt2->fetch(PDO::FETCH_OBJ)) {?>
-                                                    <option value="<?=$rs2->cidade_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs2->cidade_nm?></option>
-                                                    <?php
-                                                    }} else {
-                                                        echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
-                                                    }} catch (PDOException $erro) {
-                                                        echo "Erro: ".$erro->getMessage();
-                                                    }?>
+                                                <?php if($cidade != '*'): ?>
+                                                    <option value="<?=$cidade;?>"><?=optionname($optiontype = 'cidade', $cidade);?></option>
+                                                    <option value="*">Todas</option>
+                                                <?php else: ?>
+                                                    <option value="*">Todas</option>
+                                                <?php endif;
+                                                while ($rs2 = $stmt2->fetch(PDO::FETCH_OBJ)) {
+                                                    if($rs2->cidade_id != $cidade): ?>
+                                                        <option value="<?=$rs2->cidade_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs2->cidade_nm?></option>
+                                                    <?php endif;
+                                                }
+                                        } else {
+                                            echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
+                                        }
+                                    } catch (PDOException $erro) {
+                                        echo "Erro: ".$erro->getMessage();
+                                    }?>
                                             </select>
                                 </div>
                             </div>
@@ -129,9 +134,6 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
         <p class="nome">Asilos em destaque:</p>
         <div class="container">
             <?php
-            echo "</br><b>Nome = </b>" . $nome;
-            echo "</br><b>Cidade = </b>" . $cidade;
-            echo "</br><b>Categoria = </b>" . $categoria;
             try {
                 // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                 $pdo = db_connect();

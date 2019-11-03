@@ -209,14 +209,17 @@ if($_SESSION['user_adm'] != 0){
                                     $stmt->execute();
                                     if ($stmt->execute()) { ?>
                                         <select name="cidade">
-                                            <?php while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {?>
-                                                <option value="<?=$rs->cidade_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs->cidade_nm?></option>
-                                                <?php
-                                                // Preenche a conta bancaria no campo conta bancaria com um valor "value"
-                                                if (isset($cidade) && $cidade != null || $cidade != ""){
-                                                    echo "value=\"{$cidade}\"";
-                                                }?>
-                                    <?php }} else {
+                                                <?php if($cidade != '*'): ?>
+                                                    <option value="<?=$cidade;?>"><?=optionname($optiontype = 'cidade', $cidade);?></option>
+                                                    <option value="*">Todas</option>
+                                                <?php else: ?>
+                                                    <option value="*">Todas</option>
+                                                <?php endif;
+                                                while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+                                                    if($rs->cidade_id != $cidade): ?>
+                                                        <option value="<?=$rs->cidade_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs->cidade_nm?></option>
+                                                    <?php endif;
+                                    }} else {
                                         echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
                                     }} catch (PDOException $erro) {
                                         echo "Erro: ".$erro->getMessage();
@@ -268,14 +271,17 @@ if($_SESSION['user_adm'] != 0){
                                     $stmt2->execute();
                                     if ($stmt2->execute()) { ?>
                                         <select name="categoria">
-                                            <?php while ($rs = $stmt2->fetch(PDO::FETCH_OBJ)) {?>
-                                                <option value="<?=$rs->tipo_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs->tipo_nm?></option>
-                                                <?php
-                                                // Preenche a conta bancaria no campo conta bancaria com um valor "value"
-                                                if (isset($categoria) && $categoria != null || $categoria != ""){
-                                                    echo "value=\"{$categoria}\"";
-                                                }?>
-                                    <?php }} else {
+                                                <?php if($categoria != '*'): ?>
+                                                    <option value="<?=$categoria;?>"><?=optionname($optiontype = 'categoria', $categoria);?></option>
+                                                    <option value="*">Todas</option>
+                                                <?php else: ?>
+                                                    <option value="*">Todas</option>
+                                                <?php endif;
+                                                while ($rs = $stmt2->fetch(PDO::FETCH_OBJ)) {
+                                                    if($rs->tipo_id != $categoria): ?>
+                                                        <option value="<?=$rs->tipo_id?>" style="width:60%;"  class="form-control input-lg"><?=$rs->tipo_nm?></option>
+                                                    <?php endif;
+                                    }} else {
                                         echo "Erro: Não conseguiu recupaerar os dados do Banco de Dados!";
                                     }} catch (PDOException $erro) {
                                         echo "Erro: ".$erro->getMessage();

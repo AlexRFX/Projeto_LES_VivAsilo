@@ -24,6 +24,22 @@ function loggedin(){
     return true;
 }
 
+// Função que retorna o nome da opção:
+function optionname($optiontype, $optionname){
+        $pdo = db_connect();
+        if($optiontype == 'categoria'):
+            $stmt = $pdo->prepare("SELECT tipo_nm AS value FROM tb_tipo WHERE tipo_id = $optionname LIMIT 1");
+        else:
+            $stmt = $pdo->prepare("SELECT cidade_nm AS value FROM tb_cidade WHERE cidade_id = $optionname LIMIT 1");
+        endif;
+        
+        $stmt->execute();
+        $data = $stmt->fetch();
+        $result = $data['value'];
+
+        return $result;
+} 
+
 // Verifica se o usuario é mantenedor:
 function maintainerch($id){
     $pdo = db_connect();
