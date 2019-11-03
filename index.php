@@ -35,13 +35,16 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
             $cidade = (isset($_POST["cidade"]) && $_POST["cidade"] != null) ? $_POST["cidade"] : "";
             $mensal = (isset($_POST["mensal"]) && $_POST["mensal"] != null) ? $_POST["mensal"] : "";
             $categoria = (isset($_POST["categoria"]) && $_POST["categoria"] != null) ? $_POST["categoria"] : "";
-
+            $_SESSION['nome'] = $nome;
+            $_SESSION['cidade'] = $cidade;
+            $_SESSION['categoria'] = $categoria;
+            
             } else {
-                $nome = '';
+                $nome = (isset($_SESSION['nome']) && $_SESSION['nome'] != null) ? $_SESSION['nome'] : "";
                 $endereco = NULL;
-                $cidade = '*';
+                $cidade = (isset($_SESSION['cidade']) && $_SESSION['cidade'] != null) ? $_SESSION['cidade'] : "*";
                 $mensal = NULL;
-                $categoria = '*';
+                $categoria = (isset($_SESSION['categoria']) && $_SESSION['categoria'] != null) ? $_SESSION['categoria'] : "*";
             }
         ?>
         <p class="nome">Procurar Asilo</p>
@@ -126,19 +129,18 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
         <p class="nome">Asilos em destaque:</p>
         <div class="container">
             <?php
-            echo "<br>Nome = ". $nome;
-            echo "<br>Cidade = ". $cidade;
-            echo "<br>categoria = ". $categoria;
+            echo "</br><b>Nome = </b>" . $nome;
+            echo "</br><b>Cidade = </b>" . $cidade;
+            echo "</br><b>Categoria = </b>" . $categoria;
             try {
                 // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                 $pdo = db_connect();
-                if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "search"):
                     if(($categoria == '*') && ($cidade == '*')):
                         $sql = "SELECT a.asilo_id, a.asilo_nm, a.asilo_ds, a.asilo_foto, a.asilo_mensalidade, a.asilo_endereco, a.asilo_nota, a.asilo_count, b.cidade_nm, c.tipo_nm "
                                             . "FROM tb_asilo a "
                                                 . "JOIN tb_cidade b ON a.asilo_cidade_fk = b.cidade_id "
                                                 . "JOIN tb_tipo c ON a.asilo_tipo_fk = c.tipo_id "
-                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC";
+                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
                         $stmt = $pdo->prepare($sql);   
                         $stmt->execute();   
                         $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -147,7 +149,7 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
                                             . "FROM tb_asilo a "
                                                 . "JOIN tb_cidade b ON a.asilo_cidade_fk = b.cidade_id "
                                                 . "JOIN tb_tipo c ON a.asilo_tipo_fk = c.tipo_id "
-                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND a.asilo_status = 1";   
+                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND a.asilo_status = 1";
                         $stmCount = $pdo->prepare($sqlCount);   
                         $stmCount->execute();   
                         $valor = $stmCount->fetch(PDO::FETCH_OBJ);
@@ -157,7 +159,7 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
                                             . "FROM tb_asilo a "
                                                 . "JOIN tb_cidade b ON a.asilo_cidade_fk = b.cidade_id "
                                                 . "JOIN tb_tipo c ON a.asilo_tipo_fk = c.tipo_id "
-                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND c.tipo_id = $categoria AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC";
+                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND c.tipo_id = $categoria AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
                         $stmt = $pdo->prepare($sql);   
                         $stmt->execute();   
                         $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -176,7 +178,7 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
                                             . "FROM tb_asilo a "
                                                 . "JOIN tb_cidade b ON a.asilo_cidade_fk = b.cidade_id "
                                                 . "JOIN tb_tipo c ON a.asilo_tipo_fk = c.tipo_id "
-                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND b.cidade_id = $cidade AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC";
+                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND b.cidade_id = $cidade AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
                         $stmt = $pdo->prepare($sql);   
                         $stmt->execute();   
                         $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -195,7 +197,7 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
                                             . "FROM tb_asilo a "
                                                 . "JOIN tb_cidade b ON a.asilo_cidade_fk = b.cidade_id "
                                                 . "JOIN tb_tipo c ON a.asilo_tipo_fk = c.tipo_id "
-                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND b.cidade_id = $cidade AND c.tipo_id = $categoria AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC";
+                                                    . "WHERE a.asilo_nm LIKE '%$nome%' AND b.cidade_id = $cidade AND c.tipo_id = $categoria AND a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC LIMIT {$linha_inicial}, " . QTDE_REGISTROS;
                         $stmt = $pdo->prepare($sql);   
                         $stmt->execute();   
                         $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -210,26 +212,7 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
                         $valor = $stmCount->fetch(PDO::FETCH_OBJ);
                            
                     endif;
-                else:
-                    $sql = "SELECT a.asilo_id, a.asilo_nm, a.asilo_ds, a.asilo_foto, a.asilo_mensalidade, a.asilo_endereco, a.asilo_nota, a.asilo_count, b.cidade_nm, c.tipo_nm "
-                                   . "FROM tb_asilo a "
-                                       . "JOIN tb_cidade b ON a.asilo_cidade_fk = b.cidade_id "
-                                       . "JOIN tb_tipo c ON a.asilo_tipo_fk = c.tipo_id "
-                                           . "WHERE a.asilo_status = 1 ORDER BY a.asilo_nota/a.asilo_count DESC";
-                    $stmt = $pdo->prepare($sql);   
-                    $stmt->execute();   
-                    $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    // Conta quantos resultados serão exibidos na tela 
-                    $sqlCount = "SELECT COUNT(a.asilo_id) AS total_registros "
-                                        . "FROM tb_asilo a "
-                                            . "JOIN tb_cidade b ON a.asilo_cidade_fk = b.cidade_id "
-                                            . "JOIN tb_tipo c ON a.asilo_tipo_fk = c.tipo_id "
-                                                . "WHERE a.asilo_status = 1";
-                    $stmCount = $pdo->prepare($sqlCount);   
-                    $stmCount->execute();   
-                    $valor = $stmCount->fetch(PDO::FETCH_OBJ);
-                           
-                endif;
+                    
                     if ($stmt->rowCount() === 0):?>
                         <center><h4 class="bg-warning"> Sua pesquisa <?=$nome;?> não encontrou nenhum asilo correspondente.</br></br>
                         Sugestões:
