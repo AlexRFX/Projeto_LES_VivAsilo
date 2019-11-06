@@ -16,7 +16,7 @@ $senhaHash = isset($_POST['senha']) ? $_POST['senha'] : '';
 // Caso falte algum parametro:
 if (empty($nome) || empty($email) || empty($senhaHash)){?>
     <h4 class="bg-warning">Informe nome, email e senha;</h4>
-    </br></br><h3><a href="../index.php">Voltar para a pagina principal</a></h3>
+    </br></br><center><h3><a href="../index.php">Voltar para a pagina principal</a></h3></center>
     <?php exit;
 } 
 
@@ -27,8 +27,8 @@ $pdo = db_connect();
 $stmt = $pdo->prepare("SELECT user_email FROM tb_user WHERE user_email = :email");
 $stmt->bindParam(':email', $email); $stmt->execute();
     if ($stmt->rowCount() > 0) {
-        ?><h4 class="bg-warning">E-mail Já cadastrado;</h4>
-        </br></br><h3><a href="../index.php">Voltar para a pagina principal</a></h3>
+        ?><center><h4 class="bg-warning">E-mail Já cadastrado;</h4>
+        </br></br><<h3><a href="../index.php">Voltar para a pagina principal</a></h3></center>
         <?php exit;
     }
 
@@ -42,14 +42,14 @@ $stmt2->bindParam(2, $email);
 $stmt2->bindParam(3, $senhaHash);
     if ($stmt2->execute()) {
         if ($stmt2->rowCount() > 0) {?>
-            <h4 class="bg-success">Cadastro efetuado com sucesso!</h4>
+            <center><h4 class="bg-success">Cadastro efetuado com sucesso!</h4></center>
             <?php
             $id = null;
             $nome = null;
             $email = null;
             $senhaHash = null;
         } else {?>
-            <h4 class="bg-danger">Cadastro Inválido!</h4>
+            <center><h4 class="bg-danger">Cadastro Inválido!</h4></center>
             <?php
         }} else {
             throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");

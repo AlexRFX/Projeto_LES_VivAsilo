@@ -26,9 +26,30 @@ require '../logincheck.php';
         <p class="nome">Painel do Usuário</p>
         <?php
         if ($_SESSION['user_adm'] != 1) {
-            if (maintainerch($_SESSION['user_id']) != true) { ?>
-                <h4 class="bg-warning"> Aguardando validação da conta.</h4>
-                <?php
+            if (maintainerch($_SESSION['user_id']) != true) {
+                // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
+                    $pdo = db_connect();
+                    $stmt0 = $pdo->prepare("SELECT user_email FROM tb_user WHERE user_id = :id");
+                    $stmt0->bindParam(':id', $_SESSION['user_id']);
+                    if ($stmt0->execute()) {
+                        while ($rs = $stmt0->fetch(PDO::FETCH_OBJ)) {
+                            ?>
+                            <div class="container">
+                                <div class="row comens verd">
+                                    <div class="col-sm-12 font2" style="text-align:left;">
+                                        </br>
+                                        <p class="nome">Minhas Informações</p>
+                                        </br>
+                                        <center>
+                                        <h3><b>E-mail:</b> <?php echo $rs->user_email; ?>&nbsp;<a onclick="document.getElementById('id02').style.display = 'block'">[Editar]</a></h3></br>
+                                        <h3><b>Senha:</b> ************* &nbsp;<a onclick="document.getElementById('id03').style.display = 'block'">[Editar]</a></h3></br>
+                                        </center>
+                                        </br><br>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php }  
+                        }
             } else {
                 try {
                     // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
@@ -63,14 +84,20 @@ require '../logincheck.php';
                                             }   
                         }
                         if (maintainerch($_SESSION['user_id']) != true) { ?>
-                            <h4 class="bg-warning"> Aguardando validação da conta.</h4>
+                            </br><br></div>
+                                </div>
+                            </div>
                             </br><br>
                         <?php } else { ?>
                             </br><br></div>
                                 </div>
                             </div>
                             <p class="nome">Meu Asilo:</p>
-                            <h3 class="cen"><a href="../Asilo/form-asilo.php"><span class="glyphicon glyphicon-plus"></span><u> Gerenciar asilo</u></a></h3>
+                                <?php if (asilocheck($_SESSION['user_id']) != true) { ?>
+                                    <h3 class="cen"><a href="../Asilo/form-asilo.php"><span class="glyphicon glyphicon-plus"></span><u> Cadastrar asilo</u></a></h3>
+                                <?php } else { ?>
+                                    <h3 class="cen"><a href="../Asilo/form-asilo.php"><span class="glyphicon glyphicon-wrench"></span><u> Gerenciar asilo</u></a></h3>
+                                <?php } ?>
                             <?php if(asilocheck($_SESSION['user_id'])== true) { ?>
                                 <div class="container">
                                     <div class="row comens verd">

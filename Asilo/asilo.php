@@ -143,7 +143,7 @@ require '../init.php';
         // conecta com o banco; executa a query; exibe os dados do asilo:
         try {
             $pdo = db_connect();
-            $stmt8 = $pdo->prepare("SELECT a.user_nm, a.user_email, b.asilo_nm, b.asilo_ds, b.asilo_foto, b.asilo_siteurl, b.asilo_telefone, b.asilo_cnpj, b.asilo_mensalidade, b.asilo_necessidade, b.asilo_endereco, b.asilo_nota, b.asilo_count, c.cidade_nm, d.tipo_nm "
+            $stmt8 = $pdo->prepare("SELECT a.user_nm, a.user_email, b.asilo_nm, b.asilo_ds, b.asilo_foto, b.asilo_siteurl, b.asilo_telefone, b.asilo_cnpj, b.asilo_necessidade, b.asilo_endereco, b.asilo_nota, b.asilo_count, c.cidade_nm, d.tipo_nm "
                                    . "FROM tb_user a "
                                        . "RIGHT JOIN tb_asilo b ON a.user_id = b.asilo_mantenedor_fk "
                                        . "JOIN tb_cidade c ON b.asilo_cidade_fk = c.cidade_id "
@@ -178,12 +178,10 @@ require '../init.php';
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 ">
+                        <div class="col-sm-6 ">
                             <p class="fonte1 b">Categoria:</p><p class="m"><?=$rs->tipo_nm;?></p>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 ">
+                        <div class="col-sm-6 ">
                             <p class="fonte1 b">Cidade:</p><p class="m"><?=$rs->cidade_nm;?></p>
                         </div>
                     </div>
@@ -194,21 +192,20 @@ require '../init.php';
                     </div>
                     <div class="row">
                         <div class="col-sm-6 ">
-                            <p class="fonte1 b">Mensalidade:</p><p class="m">R$<?=$rs->asilo_mensalidade;?></p>
+                            <p class="fonte1 b">CNPJ:</p><p class="m"><?=$rs->asilo_cnpj;?> </p>
                         </div>
                         <div class="col-sm-6 ">
+                            <p class="fonte1 b">Telefone:</p><p class="m"><?=$rs->asilo_telefone;?> </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 ">
                             <p class="fonte1 b">Necessidades:</p><p class="m"><?=$rs->asilo_necessidade;?></p>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4 ">
-                            <p class="fonte1 b">CNPJ:</p><p class="m"><?=$rs->asilo_cnpj;?> </p>
-                        </div>
-                        <div class="col-sm-4 ">
-                            <p class="fonte1 b">Site:</p><a href="<?=$rs->asilo_siteurl;?>"><p class="m"><?=$rs->asilo_siteurl;?></p></a>
-                        </div>
-                        <div class="col-sm-4 ">
-                            <p class="fonte1 b">Telefone:</p><p class="m"><?=$rs->asilo_telefone;?> </p>
+                        <div class="col-sm-12 ">
+                            <p class="fonte1 b">Site:</p><p class="m"><?=$rs->asilo_siteurl;?></p>
                         </div>
                     </div>
                             <?php

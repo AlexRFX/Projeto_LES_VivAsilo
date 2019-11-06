@@ -39,7 +39,6 @@ if($_SESSION['user_adm'] != 0){
                 $cidade = (isset($_POST["cidade"]) && $_POST["cidade"] != null) ? $_POST["cidade"] : "";
                 $desc = (isset($_POST["desc"]) && $_POST["desc"] != null) ? $_POST["desc"] : "";
                 $neces = (isset($_POST["neces"]) && $_POST["neces"] != null) ? $_POST["neces"] : "";
-                $mensal = (isset($_POST["mensal"]) && $_POST["mensal"] != null) ? $_POST["mensal"] : "";
                 $categoria = (isset($_POST["categoria"]) && $_POST["categoria"] != null) ? $_POST["categoria"] : "";
                 $site = (isset($_POST["site"]) && $_POST["site"] != null) ? $_POST["site"] : "";
 
@@ -50,11 +49,10 @@ if($_SESSION['user_adm'] != 0){
                 $endereco = NULL;
                 $cnpj = NULL;
                 $telefone = NULL;
-                $cidade = NULL;
+                $cidade = '*';
                 $desc = NULL;
                 $neces = NULL;
-                $mensal = NULL;
-                $categoria = NULL;
+                $categoria = '*';
                 $site = NULL;
             }
             // Ação: cadastrar:
@@ -62,11 +60,11 @@ if($_SESSION['user_adm'] != 0){
                 $pdo = db_connect();
                 try {
                     if ($id != "") {
-                        $stmt = $pdo->prepare("UPDATE tb_asilo SET asilo_nm = ?, asilo_endereco = ?, asilo_cnpj = ?, asilo_telefone = ?, asilo_cidade_fk = ?, asilo_ds = ?, asilo_necessidade = ?, asilo_mensalidade = ?, asilo_tipo_fk = ?, asilo_siteurl = ? WHERE asilo_id = ?");
-                        $stmt->bindParam(11, $id);
+                        $stmt = $pdo->prepare("UPDATE tb_asilo SET asilo_nm = ?, asilo_endereco = ?, asilo_cnpj = ?, asilo_telefone = ?, asilo_cidade_fk = ?, asilo_ds = ?, asilo_necessidade = ?, asilo_tipo_fk = ?, asilo_siteurl = ? WHERE asilo_id = ?");
+                        $stmt->bindParam(10, $id);
                     } else {
-                        $stmt = $pdo->prepare("INSERT INTO tb_asilo (`asilo_nm`, `asilo_endereco`, `asilo_cnpj`, `asilo_telefone`, `asilo_cidade_fk`, `asilo_ds`, `asilo_necessidade`, `asilo_mensalidade`, `asilo_tipo_fk`, `asilo_siteurl`, `asilo_mantenedor_fk`, `asilo_status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
-                        $stmt->bindParam(11, $_SESSION['user_id']);
+                        $stmt = $pdo->prepare("INSERT INTO tb_asilo (`asilo_nm`, `asilo_endereco`, `asilo_cnpj`, `asilo_telefone`, `asilo_cidade_fk`, `asilo_ds`, `asilo_necessidade`, `asilo_tipo_fk`, `asilo_siteurl`, `asilo_mantenedor_fk`, `asilo_status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
+                        $stmt->bindParam(10, $_SESSION['user_id']);
                     }
                     $stmt->bindParam(1, $nome);
                     $stmt->bindParam(2, $endereco);
@@ -75,9 +73,8 @@ if($_SESSION['user_adm'] != 0){
                     $stmt->bindParam(5, $cidade);
                     $stmt->bindParam(6, $desc);
                     $stmt->bindParam(7, $neces);
-                    $stmt->bindParam(8, $mensal);
-                    $stmt->bindParam(9, $categoria);
-                    $stmt->bindParam(10, $site);
+                    $stmt->bindParam(8, $categoria);
+                    $stmt->bindParam(9, $site);
                     if ($stmt->execute()) {
                         if ($stmt->rowCount() > 0) {
                             ?> <center> <h3 style="background-color:#A9F5A9;"> Dados do Asilo cadastrado com sucesso! </h3> </center>
@@ -89,7 +86,6 @@ if($_SESSION['user_adm'] != 0){
                             $cidade = NULL;
                             $desc = NULL;
                             $neces = NULL;
-                            $mensal = NULL;
                             $categoria = NULL;
                             $site = NULL;
                         } else {
@@ -118,7 +114,6 @@ if($_SESSION['user_adm'] != 0){
                     $cidade = $rs->asilo_cidade_fk;
                     $desc = $rs->asilo_ds;
                     $neces = $rs->asilo_necessidade;
-                    $mensal = $rs->asilo_mensalidade;
                     $categoria = $rs->asilo_tipo_fk;
                     $site = $rs->asilo_siteurl;
                 } else {
@@ -142,8 +137,12 @@ if($_SESSION['user_adm'] != 0){
                 }} catch (PDOException $erro) {
                     echo "Erro: ".$erro->getMessage();
                 }
-        }?>
-    <p class="nome">Cadastrar Asilo</p>
+        }
+    if (asilocheck($_SESSION['user_id']) != true) { ?>
+        <p class="nome">Cadastrar Asilo</p>
+    <?php } else { ?>
+        <p class="nome">Gerenciar Asilo</p>
+    <?php } ?>
     <div class="container">
         <div class="row">
             <div class="col-12 comens verd">
@@ -180,7 +179,7 @@ if($_SESSION['user_adm'] != 0){
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="cnpj"><h4>CNPJ:</h4></label><br>
-                                <center><input type="number" name="cnpj" maxlength="14" minlength="14" style="width:60%;"  class="form-control input-lg" <?php
+                                <center><input type="text" name="cnpj" maxlength="18" minlength="18" style="width:60%;"  class="form-control input-lg" <?php
                                 // Preenche o cnpj no campo cnpj com um valor "value"
                                 if (isset($cnpj) && $cnpj != null || $cnpj != ""){
                                     echo "value=\"{$cnpj}\"";
@@ -247,17 +246,6 @@ if($_SESSION['user_adm'] != 0){
                                 if (isset($neces) && $neces != null || $neces != ""){
                                     echo "value=\"{$neces}\"";
                                 }?> />
-                            </div>
-                        </div>
-                        <!-- Valor da Mensalidade -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="mensal"><h4>Valor da Mensalidade:</h4></label><br>
-                                <center><input type="number" name="mensal" maxlength="6" style="width:60%;" class="form-control input-lg" <?php
-                                // Preenche a mensalide no campo mensal com um valor "value"
-                                if (isset($mensal) && $mensal != null || $mensal != ""){
-                                    echo "value=\"{$mensal}\"";
-                                }?> /></center>
                             </div>
                         </div>
                         <!-- Categoria -->    
