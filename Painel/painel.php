@@ -29,7 +29,7 @@ require '../logincheck.php';
             if (maintainerch($_SESSION['user_id']) != true) {
                 // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                     $pdo = db_connect();
-                    $stmt0 = $pdo->prepare("SELECT user_email FROM tb_user WHERE user_id = :id");
+                    $stmt0 = $pdo->prepare("SELECT user_nm, user_email FROM tb_user WHERE user_id = :id");
                     $stmt0->bindParam(':id', $_SESSION['user_id']);
                     if ($stmt0->execute()) {
                         while ($rs = $stmt0->fetch(PDO::FETCH_OBJ)) {
@@ -41,6 +41,7 @@ require '../logincheck.php';
                                         <p class="nome">Minhas Informações</p>
                                         </br>
                                         <center>
+                                        <h3><b>Nome:</b> <?php echo $rs->user_nm; ?>&nbsp;<a onclick="document.getElementById('id01').style.display = 'block'">[Editar]</a></h3></br>
                                         <h3><b>E-mail:</b> <?php echo $rs->user_email; ?>&nbsp;<a onclick="document.getElementById('id02').style.display = 'block'">[Editar]</a></h3></br>
                                         <h3><b>Senha:</b> ************* &nbsp;<a onclick="document.getElementById('id03').style.display = 'block'">[Editar]</a></h3></br>
                                         </center>
@@ -54,7 +55,7 @@ require '../logincheck.php';
                 try {
                     // Bloco que realiza o papel do Read - recupera os dados e apresenta na tela
                     $pdo = db_connect();
-                    $stmt = $pdo->prepare("SELECT a.user_email, b.mantenedor_telefone, b.mantenedor_foto FROM tb_user a, tb_mantenedor b WHERE a.user_id = :id AND a.user_id = b.mantenedor_fk");
+                    $stmt = $pdo->prepare("SELECT a.user_nm, a.user_email, b.mantenedor_telefone, b.mantenedor_foto FROM tb_user a, tb_mantenedor b WHERE a.user_id = :id AND a.user_id = b.mantenedor_fk");
                     $stmt->bindParam(':id', $_SESSION['user_id']);
                     if ($stmt->execute()) {
                         while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
@@ -71,6 +72,7 @@ require '../logincheck.php';
                                         </br>
                                         <p class="nome">Minhas Informações</p>
                                         </br>
+                                        <h3><b>Nome:</b> <?php echo $rs->user_nm; ?>&nbsp;<a onclick="document.getElementById('id01').style.display = 'block'">[Editar]</a></h3></br>
                                         <h3><b>E-mail:</b> <?php echo $rs->user_email; ?>&nbsp;<a onclick="document.getElementById('id02').style.display = 'block'">[Editar]</a></h3></br>
                                         <h3><b>Senha:</b> ************* &nbsp;<a onclick="document.getElementById('id03').style.display = 'block'">[Editar]</a></h3></br>
                                         <h3><b>Telefone: </b>
@@ -136,7 +138,29 @@ require '../logincheck.php';
         }?>
             </p></div></center></div></div>
 
-        <!-- Formularios de troca de e-mail(ID02), Senha(ID03), telefone(ID04) e foto(ID05): -->
+        <!-- Formularios de troca do nome(ID01), e-mail(ID02), Senha(ID03), telefone(ID04) e foto(ID05): -->
+        <div id="id01" class="modal"> 
+            <form action="namechange.php" method="post" class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id01').style.display = 'none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <p class="fonte2 nome">Editar nome</p>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <center>
+                            <input type="nome" placeholder="Digite o seu nome" name="nome" id="nome" required class="form-control input-lg" style="width:60%">
+                            </br>
+                            <table>
+                                <tr>
+                                    <td><button type="submit" class="form-control input-lg" style="width:100%">Confirmar</button></td>
+                                    <td><button type="button" onclick="document.getElementById('id01').style.display = 'none'" class="cancel form-control input-lg" style="width:100%">Cancelar</button></td></tr>
+                            </table>
+                            </br>
+                        </center>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div id="id02" class="modal"> 
             <form action="emailchange.php" method="post" class="modal-content animate">
                 <div class="imgcontainer">
