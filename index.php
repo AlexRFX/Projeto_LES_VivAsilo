@@ -32,7 +32,6 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $nome = (isset($_POST["nome"]) && $_POST["nome"] != null) ? $_POST["nome"] : "";
             $cidade = (isset($_POST["cidade"]) && $_POST["cidade"] != null) ? $_POST["cidade"] : "*";
-            $mensal = (isset($_POST["mensal"]) && $_POST["mensal"] != null) ? $_POST["mensal"] : "";
             $categoria = (isset($_POST["categoria"]) && $_POST["categoria"] != null) ? $_POST["categoria"] : "*";
             $_SESSION['nome'] = $nome;
             $_SESSION['cidade'] = $cidade;
@@ -41,7 +40,6 @@ $linha_inicial = ($pagina_atual -1) * QTDE_REGISTROS;
             } else {
                 $nome = (isset($_SESSION['nome']) && $_SESSION['nome'] != null) ? $_SESSION['nome'] : "";
                 $cidade = (isset($_SESSION['cidade']) && $_SESSION['cidade'] != null) ? $_SESSION['cidade'] : "*";
-                $mensal = NULL;
                 $categoria = (isset($_SESSION['categoria']) && $_SESSION['categoria'] != null) ? $_SESSION['categoria'] : "*";
             }
         ?>

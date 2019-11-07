@@ -73,6 +73,19 @@ function asilocheck($id_mantenedor){
     return false;
 }
 
+// Verifica se o asilo está ativado ou não:
+function asilostatus($user_id){
+    $pdo = db_connect();
+    $stmt = $pdo->prepare("SELECT asilo_status AS value FROM tb_asilo WHERE asilo_mantenedor_fk = $user_id");
+    $stmt->execute();
+    $data = $stmt->fetch();
+    $result = $data['value'];
+    if ($result == 1) {
+        return true;
+    }
+    return false;
+}
+
 // Verifica se o usuario já fez um comentario com nota para este asilo:
 function usercomentcheck($asilo_id, $user_id){
     $pdo = db_connect();

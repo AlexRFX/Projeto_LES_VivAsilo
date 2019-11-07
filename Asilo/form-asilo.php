@@ -41,6 +41,7 @@ if($_SESSION['user_adm'] != 0){
                 $neces = (isset($_POST["neces"]) && $_POST["neces"] != null) ? $_POST["neces"] : "";
                 $categoria = (isset($_POST["categoria"]) && $_POST["categoria"] != null) ? $_POST["categoria"] : "";
                 $site = (isset($_POST["site"]) && $_POST["site"] != null) ? $_POST["site"] : "";
+                $status = (isset($_POST["status"]) && $_POST["status"] != null) ? $_POST["status"] : 0;
 
             } else if (!isset($id)) {
                 // Se não se não foi setado nenhum valor para variável $id
@@ -54,17 +55,18 @@ if($_SESSION['user_adm'] != 0){
                 $neces = NULL;
                 $categoria = '*';
                 $site = NULL;
+                $status = 0;
             }
             // Ação: cadastrar:
             if (isset($_REQUEST["act"]) && $_REQUEST["act"] == "save" && $nome != ""){
                 $pdo = db_connect();
                 try {
                     if ($id != "") {
-                        $stmt = $pdo->prepare("UPDATE tb_asilo SET asilo_nm = ?, asilo_endereco = ?, asilo_cnpj = ?, asilo_telefone = ?, asilo_cidade_fk = ?, asilo_ds = ?, asilo_necessidade = ?, asilo_tipo_fk = ?, asilo_siteurl = ? WHERE asilo_id = ?");
-                        $stmt->bindParam(10, $id);
+                        $stmt = $pdo->prepare("UPDATE tb_asilo SET asilo_nm = ?, asilo_endereco = ?, asilo_cnpj = ?, asilo_telefone = ?, asilo_cidade_fk = ?, asilo_ds = ?, asilo_necessidade = ?, asilo_tipo_fk = ?, asilo_siteurl = ?, asilo_status = ? WHERE asilo_id = ?");
+                        $stmt->bindParam(11, $id);
                     } else {
-                        $stmt = $pdo->prepare("INSERT INTO tb_asilo (`asilo_nm`, `asilo_endereco`, `asilo_cnpj`, `asilo_telefone`, `asilo_cidade_fk`, `asilo_ds`, `asilo_necessidade`, `asilo_tipo_fk`, `asilo_siteurl`, `asilo_mantenedor_fk`, `asilo_status`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1)");
-                        $stmt->bindParam(10, $_SESSION['user_id']);
+                        $stmt = $pdo->prepare("INSERT INTO tb_asilo (`asilo_nm`, `asilo_endereco`, `asilo_cnpj`, `asilo_telefone`, `asilo_cidade_fk`, `asilo_ds`, `asilo_necessidade`, `asilo_tipo_fk`, `asilo_siteurl`, `asilo_status`, `asilo_mantenedor_fk`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->bindParam(11, $_SESSION['user_id']);
                     }
                     $stmt->bindParam(1, $nome);
                     $stmt->bindParam(2, $endereco);
@@ -75,6 +77,7 @@ if($_SESSION['user_adm'] != 0){
                     $stmt->bindParam(7, $neces);
                     $stmt->bindParam(8, $categoria);
                     $stmt->bindParam(9, $site);
+                    $stmt->bindParam(10, $status);
                     if ($stmt->execute()) {
                         if ($stmt->rowCount() > 0) {
                             ?> <center> <h3 style="background-color:#A9F5A9;"> Dados do Asilo cadastrado com sucesso! </h3> </center>
@@ -83,11 +86,12 @@ if($_SESSION['user_adm'] != 0){
                             $endereco = NULL;
                             $cnpj = NULL;
                             $telefone = NULL;
-                            $cidade = NULL;
+                            $cidade = '*';
                             $desc = NULL;
                             $neces = NULL;
-                            $categoria = NULL;
+                            $categoria = '*';
                             $site = NULL;
+                            $status = 0;
                         } else {
                             ?> <center> <h3 style="background-color:#F78181;"> Erro no cadastro! Tente Novamente.</h3> </center>
                             <?php
@@ -116,6 +120,7 @@ if($_SESSION['user_adm'] != 0){
                     $neces = $rs->asilo_necessidade;
                     $categoria = $rs->asilo_tipo_fk;
                     $site = $rs->asilo_siteurl;
+                    $status = $rs->asilo_status;
                 } else {
                     throw new PDOException("Erro: Não conseguiu executar a declaração SQL!");
                 }} catch (PDOException $erro) {
@@ -286,6 +291,17 @@ if($_SESSION['user_adm'] != 0){
                                 if (isset($site) && $site != null || $site != ""){
                                     echo "value=\"{$site}\"";
                                 } ?> />
+                            </div>
+                        </div>
+                        <!-- Status -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="status"><h4>Ativar Página:</h4></label><br> 
+                                <?php if(asilostatus($_SESSION['user_id']) != False): ?>
+                                    <input type="checkbox" name="status" value="1" checked>
+                                <?php else: ?>
+                                    <input type="checkbox" name="status" value="1">
+                                <?php endif; ?>
                             </div>
                         </div></br>
                         
